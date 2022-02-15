@@ -2,3 +2,4 @@ This logbook contains all the advancement about this project for each day spend 
 
 15/02/2022
 I create this logbook and the Kaban board on Trello.
+I create the project and initialize it on github.

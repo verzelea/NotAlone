@@ -17,7 +17,10 @@ public class UpdateChat : NetworkBehaviour
     //Ajouter le message à la liste des messages
     public void Add(string message)
     {
-        Debug.Log("add");
+        if(chat.Count>=20)
+        {
+            chat.RemoveAt(0);
+        }
         chat.Add(message);
         UpdateText();
     }
@@ -25,7 +28,6 @@ public class UpdateChat : NetworkBehaviour
     //Met à jour le chat
     public void UpdateText()
     {
-        Debug.Log("update");
         chatText.text = string.Empty;
         foreach (string res in chat)
         {

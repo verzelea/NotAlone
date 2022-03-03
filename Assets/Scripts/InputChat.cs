@@ -41,7 +41,6 @@ public class InputChat : NetworkBehaviour
     public void Send()
     {
         string message = "\n" + player + " : " + inputField.text;
-        Debug.Log("client");
         if(!isServer)
         {
             SendChat(message);
@@ -58,7 +57,6 @@ public class InputChat : NetworkBehaviour
     [Command]
     public void SendChat(string message)
     {
-        Debug.Log("command");
         UpdateTextFile(message);
     }
 
@@ -66,9 +64,9 @@ public class InputChat : NetworkBehaviour
     [ClientRpc]
     public void UpdateTextFile(string response)
     {
-        Debug.Log("Rpc");
         update.Add(response);
     }
+    
     /*
     [Command]
     public void SetPlayer()

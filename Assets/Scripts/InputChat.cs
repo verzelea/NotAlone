@@ -6,24 +6,21 @@ using UnityEngine.UI;
 using Mirror;
 using UnityEngine.Networking;
 
-[RequireComponent(typeof(UpdateChat), typeof(TMP_InputField))]
+[RequireComponent(typeof(UpdateChat), typeof(TMP_InputField), typeof(PlayerData))]
 public class InputChat : NetworkBehaviour
 {
-    public string player;
+    private UpdateChat update = null;
 
-    public UpdateChat update = null;
+    [SerializeField]
+    public PlayerData data = null;
 
     [SerializeField]
     private TMP_InputField inputField = null;
     
     void Start()
     {
-        player = "player";
         update = GameObject.Find("LobbyCanvas").GetComponent<UpdateChat>();
-        /*if(isLocalPlayer)
-        {
-            player = "player " + Random.Range(1, 100);
-        }*/
+        
     }
 
     //On vérifie si le client appuie sur entrée et que le champ de saisie contient du texte
@@ -40,7 +37,7 @@ public class InputChat : NetworkBehaviour
     [Client]
     public void Send()
     {
-        string message = "\n" + player + " : " + inputField.text;
+        string message = "\n" + data.GetPlayer() + " : " + inputField.text;
         if(!isServer)
         {
             SendChat(message);
@@ -66,7 +63,7 @@ public class InputChat : NetworkBehaviour
     {
         update.Add(response);
     }
-    
+
     /*
     [Command]
     public void SetPlayer()

@@ -6,33 +6,83 @@ using UnityEngine.UI;
 using Mirror;
 using UnityEngine.Networking;
 
-[RequireComponent(typeof(MotorChat))]
+[RequireComponent(typeof(UpdateChat), typeof(TMP_InputField))]
 public class InputChat : NetworkBehaviour
 {
+    public string player;
+
+    public UpdateChat update = null;
+
     [SerializeField]
     private TMP_InputField inputField = null;
-
-    private MotorChat motor;
-
+    
     void Start()
     {
-        motor = GetComponent<MotorChat>();
+        player = "player";
+        update = GameObject.Find("LobbyCanvas").GetComponent<UpdateChat>();
+        /*if(isLocalPlayer)
+        {
+            player = "player " + Random.Range(1, 100);
+        }*/
     }
 
-    // Update is called once per frame
-    void Update()
+    //On vérifie si le client appuie sur entrée et que le champ de saisie contient du texte
+    public void Update()
     {
-        if(Input.GetButtonDown("Submit") && !string.IsNullOrEmpty(inputField.text))
+        if(Input.GetKeyDown(KeyCode.Return) 
+        && !string.IsNullOrEmpty(inputField.text))
         {
             Send();
         }
     }
 
+    //Le client crée le message et l'envoi au serveur
     [Client]
     public void Send()
     {
-        Debug.Log("input");
-        motor.SendChat("User1 : " + inputField.text + "\n");
+        string message = "\n" + player + " : " + inputField.text;
+        Debug.Log("client");
+        if(!isServer)
+        {
+            SendChat(message);
+        }
+        else
+        {
+            //envoi directement le message si c'est l'host qui envoi le message
+            UpdateTextFile(message);
+        }
         inputField.text = string.Empty;
     }
+
+    //Le serveur demande à envoyer le message à tout le monde
+    [Command]
+    public void SendChat(string message)
+    {
+        Debug.Log("command");
+        UpdateTextFile(message);
+    }
+
+    //Le serveur envoi le message à tout le monde
+    [ClientRpc]
+    public void UpdateTextFile(string response)
+    {
+        Debug.Log("Rpc");
+        update.Add(response);
+    }
+    /*
+    [Command]
+    public void SetPlayer()
+    {
+        player = "player " + Random.Range(1, 100);
+        //SetPlayerRpc();
+    }
+
+    [ClientRpc]
+    public void SetPlayerRpc()
+    {
+        if(isLocalPlayer)
+        {
+            player = "player " + Random.Range(1, 100);
+        }
+    }*/
 }

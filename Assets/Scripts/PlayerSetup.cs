@@ -11,6 +11,9 @@ public class PlayerSetup : NetworkBehaviour
     [SerializeField]
     Behaviour[] open;
 
+    [SerializeField]
+    GameObject objectToDelete;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -19,7 +22,9 @@ public class PlayerSetup : NetworkBehaviour
             for (int i=0; i<close.Length ; i++)
             {
                 close[i].enabled = false;
+                
             }
+            objectToDelete.SetActive(false);
         }
 
         if(isLocalPlayer)

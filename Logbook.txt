@@ -2,3 +2,10 @@ This logbook contains all the advancement about this project for each day spend 
 
 15/02/2022
 I create this logbook and the Kaban board on Trello.
+
+21/02/2022
+I search for multiplayer on Unity. I think use Mirror, a free server for multiplaying game on Unity.
+I think create a tchat for try the multiplayer function.
+
+22/02/2022
+I create the chat. It's just work for the current User. I need to add the multiplayer function.

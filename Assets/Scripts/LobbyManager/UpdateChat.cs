@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Mirror;
-using UnityEngine.Networking;
+using TMPro;
 
 [RequireComponent(typeof(TMP_Text))]
-public class UpdateChat : NetworkBehaviour
+public class UpdateChat : MonoBehaviour
 {
-    public readonly ArrayList chat = new ArrayList();
+    private readonly ArrayList chat = new ArrayList();
 
     [SerializeField]
     private TMP_Text chatText = null;

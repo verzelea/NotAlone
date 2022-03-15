@@ -5,11 +5,8 @@ using Mirror;
 
 public class PlayerSetup : NetworkBehaviour
 {
-    [SerializeField]
-    Behaviour[] close;
-
-    [SerializeField]
-    Behaviour[] open;
+    //[SerializeField]
+    //Behaviour[] close;
 
     [SerializeField]
     GameObject objectToDelete;
@@ -19,21 +16,22 @@ public class PlayerSetup : NetworkBehaviour
     {
         if(!isLocalPlayer)
         {
-            for (int i=0; i<close.Length ; i++)
+            /*for (int i=0; i<close.Length ; i++)
             {
                 close[i].enabled = false;
                 
-            }
+            }*/
             objectToDelete.SetActive(false);
         }
-
-        if(isLocalPlayer)
-        {
-            for (int i=0; i<open.Length ; i++)
-            {
-                open[i].enabled = true;
-            }
-        }
         
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        string netId = GetComponent<NetworkIdentity>().netId.ToString();
+        Player player = GetComponent<Player>();
+        LobbyManager.RegisterPlayer(netId, player);
     }
 }

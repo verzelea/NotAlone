@@ -3,18 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Mirror;
+using UnityEngine.SceneManagement;
 
 public class InputChat : NetworkBehaviour
 {
-
-    public UpdateChat update = null;
+    private UpdateChat update = null;
 
     [SerializeField]
     private TMP_InputField inputField = null;
 
     void Start()
     {
-        update = GameObject.Find("LobbyManager").GetComponent<UpdateChat>();
+        Scene scene = SceneManager.GetActiveScene();
+        string manager="";
+        switch (scene.name)
+        {
+            case "Lobby":
+                manager = "LobbyManager";
+                //update = GameObject.Find(manager).GetComponent<UpdateChat>();
+                break;
+
+            case "Game":
+                manager = "GameManager";
+                break;
+        }
+        update = GameObject.Find(manager).GetComponent<UpdateChat>();
     }
 
     //On vérifie si le client appuie sur entrée et que le champ de saisie contient du texte

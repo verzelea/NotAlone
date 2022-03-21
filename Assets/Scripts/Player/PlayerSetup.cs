@@ -2,28 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.SceneManagement;
 
 public class PlayerSetup : NetworkBehaviour
 {
-    //[SerializeField]
-    //Behaviour[] close;
+    private StartButton button = null;
 
     [SerializeField]
     GameObject objectToDelete;
 
+    private Scene scene;
+
     // Start is called before the first frame update
     private void Start()
     {
-        if(!isLocalPlayer)
+        if (!isLocalPlayer || scene.name == "Game")
         {
-            /*for (int i=0; i<close.Length ; i++)
-            {
-                close[i].enabled = false;
-                
-            }*/
             objectToDelete.SetActive(false);
         }
-        
     }
 
     public override void OnStartClient()
@@ -33,5 +29,14 @@ public class PlayerSetup : NetworkBehaviour
         string netId = GetComponent<NetworkIdentity>().netId.ToString();
         Player player = GetComponent<Player>();
         LobbyManager.RegisterPlayer(netId, player);
+
+        scene = SceneManager.GetActiveScene();
+
+        if (isServer && scene.name == "Lobby")
+        {
+            button = GameObject.Find("LobbyManager").GetComponent<StartButton>();
+            button.AddStartButton();
+            button.FunctionStartButton();
+        }
     }
 }

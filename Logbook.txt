@@ -27,3 +27,9 @@ Modification of the Design to make it more beautiful. Research on the rules and 
 
 29/03/2022
 Day spent on the thesis.
+
+04/04/2022
+Work on add a objectif bar for survivors and monster, create a objectif goal, and add victory screen ,adaptative for which team win, when one of the bar is full.
+
+05/04/2022
+Research for manage the different turns

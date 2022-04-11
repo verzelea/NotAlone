@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(TMP_Text))]
 public class UpdateChat : MonoBehaviour
 {
-    private readonly ArrayList chat = new ArrayList();
+    public readonly ArrayList chat = new ArrayList();
 
     [SerializeField]
     private TMP_Text chatText = null;

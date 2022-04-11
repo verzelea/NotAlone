@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Mirror;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerSetup : NetworkBehaviour
 {
-    private StartButton button = null;
+    private StartButton startButton = null;
+    private VictoryManager returnButton = null;
+
+    private LobbyManager lobbyManager = null;
 
     [SerializeField]
     GameObject objectToDelete;
@@ -25,18 +26,27 @@ public class PlayerSetup : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-
-        string netId = GetComponent<NetworkIdentity>().netId.ToString();
-        Player player = GetComponent<Player>();
-        LobbyManager.RegisterPlayer(netId, player);
-
+        
         scene = SceneManager.GetActiveScene();
+
+        if (scene.name == "Lobby")
+        {
+            string netId = GetComponent<NetworkIdentity>().netId.ToString();
+            Player player = GetComponent<Player>();
+            lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+            lobbyManager.RegisterPlayer(netId, player);
+        }
 
         if (isServer && scene.name == "Lobby")
         {
-            button = GameObject.Find("LobbyManager").GetComponent<StartButton>();
-            button.AddStartButton();
-            button.FunctionStartButton();
+            startButton = GameObject.Find("LobbyManager").GetComponent<StartButton>();
+            startButton.AddStartButton();
+        }
+
+        if (isServer && scene.name == "Game")
+        {
+            returnButton = GameObject.Find("GameManager").GetComponent<VictoryManager>();
+            returnButton.AddReturnButton();
         }
     }
 }

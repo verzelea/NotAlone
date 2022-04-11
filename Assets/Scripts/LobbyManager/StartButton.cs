@@ -10,9 +10,10 @@ public class StartButton : MonoBehaviour
     public void AddStartButton()
     {
         startButton.gameObject.SetActive(true);
+        FunctionStartButton();
     }
 
-    public void FunctionStartButton()
+    private void FunctionStartButton()
     {
         startButton.onClick.AddListener(StartGameCliked);
     }

@@ -4,6 +4,8 @@ public class Player : MonoBehaviour
 {
     public string id = "";
     public string player = "";
+    public bool isMonster = false;
+
 
     public void SetPlayer(string newname)
     {

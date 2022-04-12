@@ -31,22 +31,49 @@ public class PlayerSetup : NetworkBehaviour
 
         if (scene.name == "Lobby")
         {
-            string netId = GetComponent<NetworkIdentity>().netId.ToString();
-            Player player = GetComponent<Player>();
-            lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
-            lobbyManager.RegisterPlayer(netId, player);
+            SetupLobby();
+            if (isServer)
+            {
+                SetupLobbyServer();
+            }
         }
 
-        if (isServer && scene.name == "Lobby")
+        if (scene.name == "Game")
         {
-            startButton = GameObject.Find("LobbyManager").GetComponent<StartButton>();
-            startButton.AddStartButton();
+            SetupGameServer();
+            if (isServer)
+            {
+                SetupGameServer();
+            }
         }
+    }
 
-        if (isServer && scene.name == "Game")
-        {
-            returnButton = GameObject.Find("GameManager").GetComponent<VictoryManager>();
-            returnButton.AddReturnButton();
-        }
+    private void SetupLobby()
+    {
+        string netId = GetComponent<NetworkIdentity>().netId.ToString();
+        Player player = GetComponent<Player>();
+        lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        lobbyManager.RegisterPlayer(netId, player);
+
+        Debug.Log("Coucou");
+        var chat = gameObject.transform.Find("PlayerCanvas/ChatUI").gameObject;
+        chat.SetActive(true);
+    }
+
+    private void SetupLobbyServer()
+    {
+        startButton = GameObject.Find("LobbyManager").GetComponent<StartButton>();
+        startButton.AddStartButton();
+    }
+
+    private void SetupGame()
+    {
+
+    }
+
+    private void SetupGameServer()
+    {
+        returnButton = GameObject.Find("GameManager").GetComponent<VictoryManager>();
+        returnButton.AddReturnButton();
     }
 }

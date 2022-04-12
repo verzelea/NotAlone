@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 153669058}
   - component: {fileID: 153669057}
   - component: {fileID: 153669056}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Marais
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 331249645}
   - component: {fileID: 331249647}
   - component: {fileID: 331249646}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,13 +209,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 389578892}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &389578892
 RectTransform:
   m_ObjectHideFlags: 0
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 1505076809}
   - component: {fileID: 1505076811}
   - component: {fileID: 1505076810}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 2134893921}
   - component: {fileID: 2134893920}
   - component: {fileID: 2134893919}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Antre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +456,7 @@ GameObject:
   - component: {fileID: 9172584008309395329}
   - component: {fileID: 2400914609125184439}
   - component: {fileID: 8043399554196301554}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -535,7 +535,7 @@ GameObject:
   - component: {fileID: 62252520261913125}
   - component: {fileID: 6317969912645033}
   - component: {fileID: 7583587256335215566}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 4429065583946202003}
   - component: {fileID: 5558067268205227973}
   - component: {fileID: 249834105552219349}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Jungle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 3256415974709156105}
   - component: {fileID: 2140295860897884837}
   - component: {fileID: 4824176339432987028}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Riviere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -856,7 +856,7 @@ GameObject:
   - component: {fileID: 2895433817940049377}
   - component: {fileID: 7146457924931476718}
   - component: {fileID: 6669499538419804987}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -935,7 +935,7 @@ GameObject:
   - component: {fileID: 5930018473272656802}
   - component: {fileID: 1313240240191487456}
   - component: {fileID: 7699749713262754235}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1015,7 +1015,7 @@ GameObject:
   - component: {fileID: 4267422722088749144}
   - component: {fileID: 8789571884519915315}
   - component: {fileID: 3217691419137032584}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Artefact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1136,7 +1136,7 @@ GameObject:
   - component: {fileID: 7348900833705250815}
   - component: {fileID: 5402000158469217410}
   - component: {fileID: 7712025043475057218}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1256,7 +1256,7 @@ GameObject:
   - component: {fileID: 8208390176873290544}
   - component: {fileID: 1798961443874049582}
   - component: {fileID: 4867278589290713164}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1335,7 +1335,7 @@ GameObject:
   - component: {fileID: 3989026856550374896}
   - component: {fileID: 3730315047679918334}
   - component: {fileID: 8972772523485393263}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1414,7 +1414,7 @@ GameObject:
   - component: {fileID: 3815645299101910184}
   - component: {fileID: 8672895343798468067}
   - component: {fileID: 1643380653072256266}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1493,7 +1493,7 @@ GameObject:
   - component: {fileID: 5762162837429575160}
   - component: {fileID: 3207048553691467503}
   - component: {fileID: 662981577272914808}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1573,7 +1573,7 @@ GameObject:
   - component: {fileID: 903631226109270235}
   - component: {fileID: 2286437207128611741}
   - component: {fileID: 4812636194371425500}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Epave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1694,7 +1694,7 @@ GameObject:
   - component: {fileID: 2837563044642996076}
   - component: {fileID: 9123356034936929948}
   - component: {fileID: 5403927938136481336}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Plage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1815,7 +1815,7 @@ GameObject:
   - component: {fileID: 3399501302566772569}
   - component: {fileID: 1501013621099392819}
   - component: {fileID: 5542915604568930316}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Rover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1936,7 +1936,7 @@ GameObject:
   - component: {fileID: 8940354516326188013}
   - component: {fileID: 8940354516326188014}
   - component: {fileID: 8940354516326188015}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlayerCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1983,7 +1983,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &8940354516326188014
 MonoBehaviour:
@@ -2037,7 +2037,7 @@ GameObject:
   - component: {fileID: 8940354516870476997}
   - component: {fileID: 8940354516870476998}
   - component: {fileID: 8940354516870476999}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ChatInputField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2211,7 +2211,7 @@ GameObject:
   - component: {fileID: 8940354516939212280}
   - component: {fileID: 8940354516939212278}
   - component: {fileID: 8940354516939212279}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2343,7 +2343,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8940354517085510878}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ChatUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2380,7 +2380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8940354517136455108}
   - component: {fileID: 8940354517136455107}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2531,7 +2531,7 @@ GameObject:
   - component: {fileID: 8940354518190283623}
   - component: {fileID: 8940354518190283624}
   - component: {fileID: 8940354518190283625}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2686,7 +2686,7 @@ GameObject:
   - component: {fileID: 8098033919842520044}
   - component: {fileID: 7398626186686030769}
   - component: {fileID: 5529018862763802444}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Abri
   m_TagString: Untagged
   m_Icon: {fileID: 0}

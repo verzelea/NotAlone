@@ -26,9 +26,6 @@ public class VictoryManager : MonoBehaviour
     [SerializeField]
     Button buttonMenu;
 
-    //delete
-    private bool check = false;
-
     public float pointSurvivant = 0.1f;
 
     public float pointMonstre = 0.1f;
@@ -41,15 +38,6 @@ public class VictoryManager : MonoBehaviour
         GameManager manager = GetComponent<GameManager>();
         pointSurvivant = (float)1 / (12 + manager.CountPlayer());
         pointMonstre = (float)1 / (6 + manager.CountPlayer());
-    }
-
-    //delete
-    private void Update()
-    {
-        if (!check)
-        {
-            check = AddPointMonstre(1);
-        }
     }
 
     //Ajoute n points pour les survivants
@@ -87,10 +75,11 @@ public class VictoryManager : MonoBehaviour
         return false;
     }
 
+    //Ajoute le bouton de retour au Lobby, et y associe la méthode de retour
     public void AddReturnButton()
     {
-        buttonMenu.gameObject.SetActive(true);
         FunctionReturnButton();
+        buttonMenu.gameObject.SetActive(true);
     }
 
     private void FunctionReturnButton()

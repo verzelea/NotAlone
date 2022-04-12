@@ -2435,6 +2435,7 @@ GameObject:
   - component: {fileID: 4540320344278710800}
   - component: {fileID: 2916527452698307982}
   - component: {fileID: 499772754903029755}
+  - component: {fileID: 5851651702223920046}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2501,9 +2502,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 380471e1467fb8248a770123b45a7c12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 
-  player: 
-  isMonster: 0
 --- !u!114 &499772754903029755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2519,6 +2517,20 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   inputField: {fileID: 8940354516870476999}
+--- !u!114 &5851651702223920046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940354517801514334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f817e0799ad27c84fbc8aa23e42ff05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!1 &8940354518190283627
 GameObject:
   m_ObjectHideFlags: 0

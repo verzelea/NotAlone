@@ -28,52 +28,58 @@ public class PlayerSetup : NetworkBehaviour
         base.OnStartClient();
         
         scene = SceneManager.GetActiveScene();
+        GameObject manager;
 
         if (scene.name == "Lobby")
         {
-            SetupLobby();
+            manager = GameObject.Find("LobbyManager");
+            SetupLobby(manager);
             if (isServer)
             {
-                SetupLobbyServer();
+                SetupLobbyServer(manager);
             }
         }
 
         if (scene.name == "Game")
         {
-            SetupGameServer();
+            manager = GameObject.Find("GameManager");
+            SetupGame(manager);
             if (isServer)
             {
-                SetupGameServer();
+                SetupGameServer(manager);
             }
         }
     }
 
-    private void SetupLobby()
+    private void SetupLobby(GameObject manager)
     {
         string netId = GetComponent<NetworkIdentity>().netId.ToString();
         Player player = GetComponent<Player>();
-        lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+        lobbyManager = manager.GetComponent<LobbyManager>();
         lobbyManager.RegisterPlayer(netId, player);
 
-        Debug.Log("Coucou");
         var chat = gameObject.transform.Find("PlayerCanvas/ChatUI").gameObject;
         chat.SetActive(true);
     }
 
-    private void SetupLobbyServer()
+    private void SetupLobbyServer(GameObject manager)
     {
-        startButton = GameObject.Find("LobbyManager").GetComponent<StartButton>();
+        startButton = manager.GetComponent<StartButton>();
         startButton.AddStartButton();
     }
 
-    private void SetupGame()
+    private void SetupGame(GameObject manager)
     {
+        var objectButton = gameObject.transform.Find("PlayerCanvas/LocationUI");
+        objectButton.gameObject.SetActive(true);
 
+        var locationManager = GetComponent<LocationManager>();
+        locationManager.SetUpLocations(manager, objectButton);
     }
 
-    private void SetupGameServer()
+    private void SetupGameServer(GameObject manager)
     {
-        returnButton = GameObject.Find("GameManager").GetComponent<VictoryManager>();
+        returnButton = manager.GetComponent<VictoryManager>();
         returnButton.AddReturnButton();
     }
 }

@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public string id = "";
-    public string player = "";
+    private string id = "";
+    private string player = "";
+    private bool isMonster = false;
+    public LocationEnum? location = null;
 
     public void SetPlayer(string newname)
     {
@@ -23,5 +25,16 @@ public class Player : MonoBehaviour
     public string GetId()
     {
         return id;
+    }
+
+    public void SetLocation(LocationEnum location)
+    {
+        this.location = location;
+        Debug.Log(player + " = " + this.location);
+    }
+
+    public LocationEnum? GetLocation()
+    {
+        return location;
     }
 }

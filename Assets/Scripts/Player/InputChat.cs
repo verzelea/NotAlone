@@ -18,14 +18,14 @@ public class InputChat : NetworkBehaviour
         {
             case "Lobby":
                 manager = "LobbyManager";
-                //update = GameObject.Find(manager).GetComponent<UpdateChat>();
+                update = GameObject.Find(manager).GetComponent<UpdateChat>();
                 break;
 
-            case "Game":
+            /*case "Game":
                 manager = "GameManager";
-                break;
+                break;*/
         }
-        update = GameObject.Find(manager).GetComponent<UpdateChat>();
+        //update = GameObject.Find(manager).GetComponent<UpdateChat>();
     }
 
     //On vérifie si le client appuie sur entrée et que le champ de saisie contient du texte

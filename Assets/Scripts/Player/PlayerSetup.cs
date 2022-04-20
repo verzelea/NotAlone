@@ -28,25 +28,61 @@ public class PlayerSetup : NetworkBehaviour
         base.OnStartClient();
         
         scene = SceneManager.GetActiveScene();
+        GameObject manager;
 
         if (scene.name == "Lobby")
         {
-            string netId = GetComponent<NetworkIdentity>().netId.ToString();
-            Player player = GetComponent<Player>();
-            lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
-            lobbyManager.RegisterPlayer(netId, player);
+            manager = GameObject.Find("LobbyManager");
+            SetupLobby(manager);
+            if (isServer)
+            {
+                SetupLobbyServer(manager);
+            }
         }
 
-        if (isServer && scene.name == "Lobby")
+        if (scene.name == "Game")
         {
-            startButton = GameObject.Find("LobbyManager").GetComponent<StartButton>();
-            startButton.AddStartButton();
+            manager = GameObject.Find("GameManager");
+            SetupGame(manager);
+            if (isServer)
+            {
+                SetupGameServer(manager);
+            }
         }
+    }
 
-        if (isServer && scene.name == "Game")
+    private void SetupLobby(GameObject manager)
+    {
+        string netId = GetComponent<NetworkIdentity>().netId.ToString();
+        Player player = GetComponent<Player>();
+        lobbyManager = manager.GetComponent<LobbyManager>();
+        lobbyManager.RegisterPlayer(netId, player);
+
+        var chat = gameObject.transform.Find("PlayerCanvas/ChatUI").gameObject;
+        chat.SetActive(true);
+    }
+
+    private void SetupLobbyServer(GameObject manager)
+    {
+        startButton = manager.GetComponent<StartButton>();
+        startButton.AddStartButton();
+    }
+
+    private void SetupGame(GameObject manager)
+    {
+        if (isLocalPlayer)
         {
-            returnButton = GameObject.Find("GameManager").GetComponent<VictoryManager>();
-            returnButton.AddReturnButton();
+            var objectButton = gameObject.transform.Find("PlayerCanvas/LocationUI");
+            objectButton.gameObject.SetActive(true);
+
+            var locationManager = GetComponent<LocationManager>();
+            locationManager.SetUpLocations(manager, objectButton);
         }
+    }
+
+    private void SetupGameServer(GameObject manager)
+    {
+        returnButton = manager.GetComponent<VictoryManager>();
+        returnButton.AddReturnButton();
     }
 }

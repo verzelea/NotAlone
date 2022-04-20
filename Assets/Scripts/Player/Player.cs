@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     public void SetLocation(LocationEnum location)
     {
         this.location = location;
-        Debug.Log("location = " + this.location);
+        Debug.Log(player + " = " + this.location);
     }
 
     public LocationEnum? GetLocation()

@@ -70,11 +70,14 @@ public class PlayerSetup : NetworkBehaviour
 
     private void SetupGame(GameObject manager)
     {
-        var objectButton = gameObject.transform.Find("PlayerCanvas/LocationUI");
-        objectButton.gameObject.SetActive(true);
+        if (isLocalPlayer)
+        {
+            var objectButton = gameObject.transform.Find("PlayerCanvas/LocationUI");
+            objectButton.gameObject.SetActive(true);
 
-        var locationManager = GetComponent<LocationManager>();
-        locationManager.SetUpLocations(manager, objectButton);
+            var locationManager = GetComponent<LocationManager>();
+            locationManager.SetUpLocations(manager, objectButton);
+        }
     }
 
     private void SetupGameServer(GameObject manager)

@@ -1,7 +1,6 @@
 using Mirror;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class InputChat : NetworkBehaviour
 {
@@ -12,19 +11,8 @@ public class InputChat : NetworkBehaviour
 
     void Start()
     {
-        Scene scene = SceneManager.GetActiveScene();
-        string manager="";
-        switch (scene.name)
-        {
-            case "Lobby":
-                manager = "LobbyManager";
-                update = GameObject.Find(manager).GetComponent<UpdateChat>();
-                break;
-
-            /*case "Game":
-                manager = "GameManager";
-                break;*/
-        }
+        update = GameObject.Find("GameManager").GetComponent<UpdateChat>();
+        
         //update = GameObject.Find(manager).GetComponent<UpdateChat>();
     }
 

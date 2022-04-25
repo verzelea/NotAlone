@@ -7,7 +7,7 @@ public class PlayerSetup : NetworkBehaviour
     private StartButton startButton = null;
     private VictoryManager returnButton = null;
 
-    private LobbyManager lobbyManager = null;
+    private NewGameManager gameManager = null;
 
     [SerializeField]
     GameObject objectToDelete;
@@ -28,11 +28,10 @@ public class PlayerSetup : NetworkBehaviour
         base.OnStartClient();
         
         scene = SceneManager.GetActiveScene();
-        GameObject manager;
+        GameObject manager = GameObject.Find("GameManager"); ;
 
         if (scene.name == "Lobby")
         {
-            manager = GameObject.Find("LobbyManager");
             SetupLobby(manager);
             if (isServer)
             {
@@ -42,7 +41,6 @@ public class PlayerSetup : NetworkBehaviour
 
         if (scene.name == "Game")
         {
-            manager = GameObject.Find("GameManager");
             SetupGame(manager);
             if (isServer)
             {
@@ -55,8 +53,8 @@ public class PlayerSetup : NetworkBehaviour
     {
         string netId = GetComponent<NetworkIdentity>().netId.ToString();
         Player player = GetComponent<Player>();
-        lobbyManager = manager.GetComponent<LobbyManager>();
-        lobbyManager.RegisterPlayer(netId, player);
+        gameManager = manager.GetComponent<NewGameManager>();
+        gameManager.RegisterPlayer(netId, player);
 
         var chat = gameObject.transform.Find("PlayerCanvas/ChatUI").gameObject;
         chat.SetActive(true);

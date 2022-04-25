@@ -9,6 +9,7 @@ public class StartButton : MonoBehaviour
 
     public void AddStartButton()
     {
+        startButton = gameObject.transform.Find("LobbyCanvas/StartButton").GetComponent<Button>();
         startButton.gameObject.SetActive(true);
         FunctionStartButton();
     }
@@ -21,5 +22,6 @@ public class StartButton : MonoBehaviour
     private void StartGameCliked()
     {
         NetworkManager.singleton.ServerChangeScene("Game");
+        GetComponent<NewGameManager>().SetupGame();
     }
 }

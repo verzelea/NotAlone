@@ -6,25 +6,25 @@ using UnityEngine.UI;
 public class VictoryManager : MonoBehaviour
 {
     [SerializeField]
-    Slider sliderPlayer;
+    private Slider sliderPlayer;
 
     [SerializeField]
-    Slider sliderMonster;
+    private Slider sliderMonster;
 
     [SerializeField]
-    GameObject endScreen;
+    private GameObject endCanvas;
 
     [SerializeField]
-    Image tokenSurvivor;
+    private Image tokenSurvivor;
 
     [SerializeField]
-    Image tokenMonster;
+    private Image tokenMonster;
 
     [SerializeField]
-    TMP_Text descriptionEnd;
+    private TMP_Text descriptionEnd;
 
     [SerializeField]
-    Button buttonMenu;
+    private Button buttonMenu;
 
     public float pointSurvivant = 0.1f;
 
@@ -32,10 +32,18 @@ public class VictoryManager : MonoBehaviour
 
     private void Start()
     {
+        sliderPlayer = gameObject.transform.Find("GameCanvas/TaskBar/SliderPlayer").GetComponent<Slider>();
+        sliderMonster = gameObject.transform.Find("GameCanvas/TaskBar/SliderMonster").GetComponent<Slider>();
+        endCanvas = gameObject.transform.Find("EndCanvas").gameObject;
+        tokenSurvivor = gameObject.transform.Find("EndCanvas/EndScreen/TokenSurvivor").GetComponent<Image>();
+        tokenMonster = gameObject.transform.Find("EndCanvas/EndScreen/TokenMonster").GetComponent<Image>();
+        descriptionEnd = gameObject.transform.Find("EndCanvas/EndScreen/Description").GetComponent<TMP_Text>();
+        buttonMenu = gameObject.transform.Find("EndCanvas/EndScreen/ReturnButton").GetComponent<Button>();
+
         tokenSurvivor.enabled = false;
         tokenMonster.enabled = false;
 
-        GameManager manager = GetComponent<GameManager>();
+        NewGameManager manager = GetComponent<NewGameManager>();
         pointSurvivant = (float)1 / (12 + manager.CountPlayer());
         pointMonstre = (float)1 / (6 + manager.CountPlayer());
     }
@@ -69,7 +77,7 @@ public class VictoryManager : MonoBehaviour
                 descriptionEnd.text = "Survivors win";
                 tokenSurvivor.enabled = true;
             }
-            endScreen.SetActive(true);
+            endCanvas.SetActive(true);
             return true;
         }
         return false;
@@ -78,17 +86,13 @@ public class VictoryManager : MonoBehaviour
     //Ajoute le bouton de retour au Lobby, et y associe la méthode de retour
     public void AddReturnButton()
     {
-        FunctionReturnButton();
-        buttonMenu.gameObject.SetActive(true);
-    }
-
-    private void FunctionReturnButton()
-    {
         buttonMenu.onClick.AddListener(ReturnLobbyCliked);
+        buttonMenu.gameObject.SetActive(true);
     }
 
     private void ReturnLobbyCliked()
     {
         NetworkManager.singleton.ServerChangeScene("Lobby");
+        GetComponent<NewGameManager>().SetupLobby();
     }
 }

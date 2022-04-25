@@ -750,6 +750,7 @@ GameObject:
   - component: {fileID: 847495397}
   - component: {fileID: 847495399}
   - component: {fileID: 847495400}
+  - component: {fileID: 847495401}
   m_Layer: 0
   m_Name: LobbyManager
   m_TagString: Untagged
@@ -810,6 +811,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startButton: {fileID: 773247017}
+--- !u!114 &847495401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847495396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f91139bf074b29847b75e4fcee3655ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &881618431
 GameObject:
   m_ObjectHideFlags: 0

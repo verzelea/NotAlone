@@ -5,20 +5,21 @@ public class LobbyManager : MonoBehaviour
 {
     private const string playerPrefix = "Player";
 
-    private Dictionary<string, Player> players = new Dictionary<string, Player>();
+    private Dictionary<string, PlayerData> players = new Dictionary<string, PlayerData>();
 
     public void RegisterPlayer(string netId, Player player)
     {
-        Debug.Log(netId);
+        //Debug.Log(netId);
         string name = playerPrefix + netId;
-        players.Add(name, player);
         player.SetPlayer(name);
+        Debug.Log(player.data.Player);
         player.SetId(netId);
+        players.Add(netId, player.data);
     }
 
     public void CleanPlayer()
     {
-        players = new Dictionary<string, Player>();
+        players = new Dictionary<string, PlayerData>();
     }
 
     public int CountPlayer()

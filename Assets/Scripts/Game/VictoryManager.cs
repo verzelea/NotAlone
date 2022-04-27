@@ -43,7 +43,7 @@ public class VictoryManager : MonoBehaviour
         tokenSurvivor.enabled = false;
         tokenMonster.enabled = false;
 
-        NewGameManager manager = GetComponent<NewGameManager>();
+        GameManager manager = GetComponent<GameManager>();
         pointSurvivant = (float)1 / (12 + manager.CountPlayer());
         pointMonstre = (float)1 / (6 + manager.CountPlayer());
     }
@@ -93,6 +93,6 @@ public class VictoryManager : MonoBehaviour
     private void ReturnLobbyCliked()
     {
         NetworkManager.singleton.ServerChangeScene("Lobby");
-        GetComponent<NewGameManager>().SetupLobby();
+        GetComponent<GameManager>().SetupLobby();
     }
 }

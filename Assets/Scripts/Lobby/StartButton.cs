@@ -22,6 +22,6 @@ public class StartButton : MonoBehaviour
     private void StartGameCliked()
     {
         NetworkManager.singleton.ServerChangeScene("Game");
-        GetComponent<NewGameManager>().SetupGame();
+        GetComponent<GameManager>().SetupGame();
     }
 }

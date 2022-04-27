@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewGameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     private const string playerPrefix = "Player";
     private bool isGame = false;
@@ -46,13 +46,10 @@ public class NewGameManager : MonoBehaviour
             case Round.Reset:
                 roundManager.ResetSetUp();
                 break;
-        }
-        
-        //GetComponent<VictoryManager>().AddPointPlayer(1);
-        
+        }        
     }
 
-    public void SetupGame()
+    public void SetupGame()//TODO appel serveur
     {
         GameCanvas.SetActive(true);
         LobbyCanvas.SetActive(false);

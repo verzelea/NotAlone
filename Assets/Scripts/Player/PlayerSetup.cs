@@ -7,7 +7,7 @@ public class PlayerSetup : NetworkBehaviour
     private StartButton startButton = null;
     private VictoryManager returnButton = null;
 
-    private NewGameManager gameManager = null;
+    private GameManager gameManager = null;
 
     [SerializeField]
     GameObject objectToDelete;
@@ -53,7 +53,7 @@ public class PlayerSetup : NetworkBehaviour
     {
         string netId = GetComponent<NetworkIdentity>().netId.ToString();
         Player player = GetComponent<Player>();
-        gameManager = manager.GetComponent<NewGameManager>();
+        gameManager = manager.GetComponent<GameManager>();
         gameManager.RegisterPlayer(netId, player);
 
         var chat = gameObject.transform.Find("PlayerCanvas/ChatUI").gameObject;

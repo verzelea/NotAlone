@@ -11,7 +11,7 @@ public class UpdateChat : MonoBehaviour
 
     private void Start()
     {
-        chatText = gameObject.transform.Find("LobbyCanvas/ChatUI/ScrollView/Viewport/ChatTextField").GetComponent<TMP_Text>();
+        chatText = gameObject.transform.Find("ChatCanvas/ChatUI/ScrollView/Viewport/ChatTextField").GetComponent<TMP_Text>();
     }
 
     //Ajouter le message à la liste des messages
@@ -33,5 +33,11 @@ public class UpdateChat : MonoBehaviour
         {
             chatText.text += res;
         }
+    }
+
+    public void ResetText()
+    {
+        chat.Clear();
+        UpdateText();
     }
 }

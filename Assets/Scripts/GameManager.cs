@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     private GameObject GameCanvas;
 
     RoundManager roundManager;
+    private Scene? scene = null;
 
     void Start()
     {
@@ -26,7 +28,24 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (!isGame || !CheckAllPlayerReady())
+        if(!isGame)
+        {
+            var tmp = SceneManager.GetActiveScene();
+            if (tmp != scene)
+            {
+                scene = tmp;
+                if (scene?.name == "Lobby")
+                {
+                    SetupLobby();
+                }
+                else if (scene?.name == "Game")
+                {
+                    SetupGame();
+                }
+            }
+            return;
+        }
+        if (!CheckAllPlayerReady())
         {
             return;
         }
@@ -53,6 +72,7 @@ public class GameManager : MonoBehaviour
     {
         GameCanvas.SetActive(true);
         LobbyCanvas.SetActive(false);
+        GetComponent<UpdateChat>().ResetText();
         isGame = true;
         etape = roundManager.InitGame(players);
     }
@@ -64,6 +84,7 @@ public class GameManager : MonoBehaviour
         GameCanvas.SetActive(false);
         LobbyCanvas.SetActive(true);
         isGame = false;
+        GetComponent<UpdateChat>().ResetText();
     }
 
     public void RegisterPlayer(string netId, Player player)
@@ -91,5 +112,11 @@ public class GameManager : MonoBehaviour
             }
         }
         return isAllPlayerReady;
+    }
+
+    public void SetPlayerReady(string id, bool change)
+    {
+        Debug.Log("player " + id + " is " + change);
+        players[id].IsReady = change;
     }
 }

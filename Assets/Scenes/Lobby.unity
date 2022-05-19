@@ -2497,12 +2497,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1463795138}
-  - component: {fileID: 1463795140}
   - component: {fileID: 1463795136}
   - component: {fileID: 1463795137}
   - component: {fileID: 1463795139}
   - component: {fileID: 1463795141}
   - component: {fileID: 1463795142}
+  - component: {fileID: 1463795143}
+  - component: {fileID: 1463795140}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2522,8 +2523,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222863a17c3bd034ca98d31cb6cc9865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGame: 0
   LobbyCanvas: {fileID: 0}
   GameCanvas: {fileID: 0}
+  sceneIsLoading: 0
 --- !u!114 &1463795137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2577,7 +2580,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1463795135}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f91139bf074b29847b75e4fcee3655ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 86a9be78bca7242478e825f68b605633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1463795141
@@ -2614,6 +2617,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundText: {fileID: 0}
+--- !u!114 &1463795143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463795135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a493b17ec1bf7df4dbe306b7f70c194c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LobbyCanvas: {fileID: 0}
+  GameCanvas: {fileID: 0}
+  gameManager: {fileID: 0}
+  updateChat: {fileID: 0}
+  endScreen: {fileID: 0}
 --- !u!1 &1488384427
 GameObject:
   m_ObjectHideFlags: 0

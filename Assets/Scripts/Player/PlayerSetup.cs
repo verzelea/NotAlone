@@ -4,83 +4,101 @@ using UnityEngine.SceneManagement;
 
 public class PlayerSetup : NetworkBehaviour
 {
-    private StartButton startButton = null;
-    private VictoryManager returnButton = null;
+    private StartButton startButton;
+    private VictoryManager victoryManager;
 
-    private GameManager gameManager = null;
+    private GameManager gameManager;
 
     [SerializeField]
     GameObject objectToDelete;
 
+    GameObject manager;
     private Scene scene;
 
-    // Start is called before the first frame update
-    private void Start()
+    Transform locationCanvas;
+
+    LocationManager locationManager;
+
+    // Start is called before the first frame update, when Client come on Server
+    public override void OnStartClient()
     {
         if (!isLocalPlayer || scene.name == "Game")
         {
             objectToDelete.SetActive(false);
         }
+        manager = GameObject.Find("GameManager");
+        locationCanvas = gameObject.transform.Find("PlayerCanvas/LocationUI");
+        locationManager = GetComponent<LocationManager>();
+        locationManager.SetUpLocations(manager, locationCanvas);
+        victoryManager = manager.GetComponent<VictoryManager>();
+        gameManager = manager.GetComponent<GameManager>();
+        startButton = manager.GetComponent<StartButton>();
+
+        AddPlayer();
     }
 
-    public override void OnStartClient()
+    private void AddPlayer()
     {
-        base.OnStartClient();
-        
+        string netId = GetComponent<NetworkIdentity>().netId.ToString();
+        Player player = GetComponent<Player>();
+        gameManager.RegisterPlayer(netId, player);
+    }
+
+    private void Update()
+    {
         scene = SceneManager.GetActiveScene();
-        GameObject manager = GameObject.Find("GameManager"); ;
 
         if (scene.name == "Lobby")
         {
-            SetupLobby(manager);
+            SetupLobby();
             if (isServer)
             {
-                SetupLobbyServer(manager);
+                SetupLobbyServer();
+                
             }
+            CloseGame();
         }
 
         if (scene.name == "Game")
         {
-            SetupGame(manager);
+            SetupGame();
             if (isServer)
             {
-                SetupGameServer(manager);
+                SetupGameServer();
+                //CloseLobbyServer(manager);
             }
         }
     }
 
-    private void SetupLobby(GameObject manager)
+    private void SetupLobby()
     {
-        string netId = GetComponent<NetworkIdentity>().netId.ToString();
-        Player player = GetComponent<Player>();
-        gameManager = manager.GetComponent<GameManager>();
-        gameManager.RegisterPlayer(netId, player);
-
         var chat = gameObject.transform.Find("PlayerCanvas/ChatUI").gameObject;
         chat.SetActive(true);
     }
 
-    private void SetupLobbyServer(GameObject manager)
+    private void SetupLobbyServer()
     {
-        startButton = manager.GetComponent<StartButton>();
         startButton.AddStartButton();
     }
 
-    private void SetupGame(GameObject manager)
+    private void SetupGame()
     {
         if (isLocalPlayer)
         {
-            var objectButton = gameObject.transform.Find("PlayerCanvas/LocationUI");
-            objectButton.gameObject.SetActive(true);
-
-            var locationManager = GetComponent<LocationManager>();
-            locationManager.SetUpLocations(manager, objectButton);
+            locationCanvas.gameObject.SetActive(true);
         }
     }
 
-    private void SetupGameServer(GameObject manager)
+    private void CloseGame()
     {
-        returnButton = manager.GetComponent<VictoryManager>();
-        returnButton.AddReturnButton();
+        if (isLocalPlayer)
+        {
+            locationCanvas.gameObject.SetActive(false);
+        }
+    }
+
+    private void SetupGameServer()
+    {
+        victoryManager.AddReturnButton();
     }
 }

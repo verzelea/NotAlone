@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private const string playerPrefix = "Player";
-    private bool isGame = false;
+    public bool isGame = false;
 
     private Dictionary<string, PlayerData> players = new Dictionary<string, PlayerData>();
     private Round etape;
@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     RoundManager roundManager;
     private Scene? scene = null;
+    public bool sceneIsLoading = false;
 
     void Start()
     {
@@ -28,24 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(!isGame)
-        {
-            var tmp = SceneManager.GetActiveScene();
-            if (tmp != scene)
-            {
-                scene = tmp;
-                if (scene?.name == "Lobby")
-                {
-                    SetupLobby();
-                }
-                else if (scene?.name == "Game")
-                {
-                    SetupGame();
-                }
-            }
-            return;
-        }
-        if (!CheckAllPlayerReady())
+        if (!isGame || !CheckAllPlayerReady())
         {
             return;
         }
@@ -68,30 +52,15 @@ public class GameManager : MonoBehaviour
         }        
     }
 
-    public void SetupGame()//TODO appel serveur
+    public void StartGame()
     {
-        GameCanvas.SetActive(true);
-        LobbyCanvas.SetActive(false);
-        GetComponent<UpdateChat>().ResetText();
-        isGame = true;
         etape = roundManager.InitGame(players);
-    }
-
-    public void SetupLobby()
-    {
-        var endScreen = gameObject.transform.Find("EndCanvas").gameObject;
-        endScreen.SetActive(false);
-        GameCanvas.SetActive(false);
-        LobbyCanvas.SetActive(true);
-        isGame = false;
-        GetComponent<UpdateChat>().ResetText();
     }
 
     public void RegisterPlayer(string netId, Player player)
     {
         string name = playerPrefix + netId;
         player.SetPlayer(name);
-        //Debug.Log(player.data.Player);
         player.SetId(netId);
         players.Add(netId, player.data);
     }

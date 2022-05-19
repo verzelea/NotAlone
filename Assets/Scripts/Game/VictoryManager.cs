@@ -26,6 +26,9 @@ public class VictoryManager : MonoBehaviour
     [SerializeField]
     private Button buttonMenu;
 
+    private GameManager gameManager;
+
+
     public float pointSurvivant = 0.1f;
 
     public float pointMonstre = 0.1f;
@@ -43,9 +46,9 @@ public class VictoryManager : MonoBehaviour
         tokenSurvivor.enabled = false;
         tokenMonster.enabled = false;
 
-        GameManager manager = GetComponent<GameManager>();
-        pointSurvivant = (float)1 / (12 + manager.CountPlayer());
-        pointMonstre = (float)1 / (6 + manager.CountPlayer());
+        gameManager = GetComponent<GameManager>();
+        pointSurvivant = (float)1 / (12 + gameManager.CountPlayer());
+        pointMonstre = (float)1 / (6 + gameManager.CountPlayer());
     }
 
     //Ajoute n points pour les survivants
@@ -92,7 +95,10 @@ public class VictoryManager : MonoBehaviour
 
     private void ReturnLobbyCliked()
     {
-        NetworkManager.singleton.ServerChangeScene("Lobby");
-        GetComponent<GameManager>().SetupLobby();
+        if (!gameManager.sceneIsLoading)
+        {
+            gameManager.sceneIsLoading = true;
+            NetworkManager.singleton.ServerChangeScene("Lobby");
+        }
     }
 }

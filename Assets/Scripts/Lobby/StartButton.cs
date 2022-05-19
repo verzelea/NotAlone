@@ -7,11 +7,14 @@ public class StartButton : MonoBehaviour
     [SerializeField]
     private Button startButton;
 
+    private GameManager gameManager;
+
     public void AddStartButton()
     {
         startButton = gameObject.transform.Find("LobbyCanvas/StartButton").GetComponent<Button>();
         startButton.gameObject.SetActive(true);
         FunctionStartButton();
+        gameManager = GetComponent<GameManager>();
     }
 
     private void FunctionStartButton()
@@ -21,7 +24,10 @@ public class StartButton : MonoBehaviour
 
     private void StartGameCliked()
     {
-        NetworkManager.singleton.ServerChangeScene("Game");
-        GetComponent<GameManager>().SetupGame();
+        if (!gameManager.sceneIsLoading)
+        {
+            gameManager.sceneIsLoading = true;
+            NetworkManager.singleton.ServerChangeScene("Game");
+        }
     }
 }

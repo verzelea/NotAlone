@@ -32,14 +32,14 @@ public class InputChat : NetworkBehaviour
     {
         Player player = GetComponent<Player>();
         string message = "\n" + player.GetPlayer() + " : " + inputField.text;
-        if(!isServer)
-        {
-            SendChat(message);
-        }
-        else
+        if(isServer)
         {
             //envoi directement le message si c'est l'host qui envoi le message
             UpdateTextFile(message);
+        }
+        else
+        {
+            SendChat(message);
         }
         inputField.text = string.Empty;
     }

@@ -28,6 +28,10 @@ public class StartButton : MonoBehaviour
         {
             gameManager.sceneIsLoading = true;
             NetworkManager.singleton.ServerChangeScene("Game");
+            if(!NetworkClient.ready)
+            {
+                NetworkClient.Ready();
+            }
         }
     }
 }

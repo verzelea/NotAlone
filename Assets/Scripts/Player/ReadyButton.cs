@@ -12,9 +12,12 @@ public class ReadyButton : NetworkBehaviour
     private Image validation;
     [SerializeField]
     private GameManager gameManager;
+    [SerializeField]
+    private GameObject readyButtonCanvas;
 
     private void Start()
     {
+        readyButtonCanvas = gameObject.transform.Find("PlayerCanvas/ReadyButton").gameObject;
         player = GetComponent<Player>();
         readyButton = gameObject.transform.Find("PlayerCanvas/ReadyButton/Button").GetComponent<Button>();
         validation = gameObject.transform.Find("PlayerCanvas/ReadyButton/Validation").GetComponent<Image>();
@@ -34,9 +37,13 @@ public class ReadyButton : NetworkBehaviour
         }
     }
 
-    public void ShowButton()
+    public void ShowButton(bool isMonsterOrNot)
     {
-        readyButton.gameObject.SetActive(true);
+        readyButtonCanvas.SetActive(true);
+        if (player.data.IsMonster == isMonsterOrNot)
+        {
+            readyButtonCanvas.SetActive(true);
+        }
     }
 
     public void ResetButton()
@@ -84,5 +91,7 @@ public class ReadyButton : NetworkBehaviour
     public void PlayerReadyRpc(string id, bool ready)
     {
         gameManager.SetPlayerReady(id, ready);
+
+        gameManager.Show();
     }
 }

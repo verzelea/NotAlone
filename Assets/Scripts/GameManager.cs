@@ -6,8 +6,10 @@ public class GameManager : MonoBehaviour
 {
     private const string playerPrefix = "Player";
     public bool isGame = false;
+    public string localPlayer;
+    public bool isServer;
 
-    private Dictionary<string, PlayerData> players = new Dictionary<string, PlayerData>();
+    private Dictionary<string, Player> players = new Dictionary<string, Player>();
     private Round etape;
 
     [SerializeField]
@@ -44,10 +46,10 @@ public class GameManager : MonoBehaviour
                 roundManager.MonsterSetUp(players);
                 break;
             case Round.Resolve:
-                roundManager.ResolveSetUp();
+                roundManager.ResolveSetUp(players);
                 break;
             case Round.Reset:
-                roundManager.ResetSetUp();
+                roundManager.ResetSetUp(players);
                 break;
         }        
     }
@@ -55,14 +57,35 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         etape = roundManager.InitGame(players);
+        Show();
     }
 
-    public void RegisterPlayer(string netId, Player player)
+    public void RegisterPlayer(string netId, Player player, bool isLocalPlayer, bool isServer)
     {
         string name = playerPrefix + netId;
         player.SetPlayer(name);
         player.SetId(netId);
-        players.Add(netId, player.data);
+        players.Add(netId, player);
+        if (isLocalPlayer)
+        {
+            localPlayer = netId;
+        }
+        this.isServer = isServer;
+
+        Show();
+    }
+
+    public Dictionary<string, Player> GetPlayers() => players;
+
+    //Delete
+    public void Show()
+    {
+        string affiche = "";
+        foreach ((string p, Player e) in players)
+        {
+            affiche += p + " : "+ e.data.IsReady  +"  ";
+        }
+        Debug.Log(affiche);
     }
 
     public int CountPlayer()
@@ -73,9 +96,9 @@ public class GameManager : MonoBehaviour
     private bool CheckAllPlayerReady()
     {
         bool isAllPlayerReady = true;
-        foreach (PlayerData player in players.Values)
+        foreach (Player player in players.Values)
         {
-            if (!player.IsReady)
+            if (!player.data.IsReady)
             {
                 isAllPlayerReady = false;
             }
@@ -86,6 +109,6 @@ public class GameManager : MonoBehaviour
     public void SetPlayerReady(string id, bool change)
     {
         Debug.Log("player " + id + " is " + change);
-        players[id].IsReady = change;
+        players[id].data.IsReady = change;
     }
 }

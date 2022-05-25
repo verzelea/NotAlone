@@ -41,7 +41,7 @@ public class PlayerSetup : NetworkBehaviour
     {
         string netId = GetComponent<NetworkIdentity>().netId.ToString();
         Player player = GetComponent<Player>();
-        gameManager.RegisterPlayer(netId, player);
+        gameManager.RegisterPlayer(netId, player, isLocalPlayer, isServer);
     }
 
     private void Update()

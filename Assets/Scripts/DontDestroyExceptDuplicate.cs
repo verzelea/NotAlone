@@ -2,7 +2,7 @@ public class DontDestroyExceptDuplicate : DontDestroyOnLoad
 {
     private static DontDestroyExceptDuplicate objectInstance;
 
-    private void Start()
+    private new void Start()
     {
         base.Start();
         if (objectInstance == null)

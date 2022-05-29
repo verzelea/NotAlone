@@ -4,15 +4,16 @@ using UnityEngine;
 public class Player : NetworkBehaviour
 {
     ReadyButton readyButton;
-    MonsterManager monsterManager;
 
     public string id;
     public PlayerData data = new PlayerData();
+    [SerializeField]
+    private GameManager gameManager;
 
     private void Start()
     {
         readyButton = GetComponent<ReadyButton>();
-        monsterManager = GetComponent<MonsterManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     public void SetPlayer(string newname)
@@ -58,14 +59,20 @@ public class Player : NetworkBehaviour
         readyButton.ResetButton();
     }
 
-    [Client]
-    public void SetMonsterClient(int choose)
+    public void SetIsMonster(bool change)
     {
-        Debug.Log("Enter Client with " + choose);
-        if (!isServer)
-        {
-            return;
-        }
-        monsterManager.SetMonsterRpc(choose);
+        data.IsMonster = change;
+    }
+
+    [Command]
+    public void SendLocationCmd(LocationEnum location)
+    {
+        gameManager.SetPlayerLocation(netId.ToString(), location);
+    }
+
+    [ClientRpc]
+    public void SendPointMonster(int pointMonster)
+    {
+        GameObject.Find("GameManager").GetComponent<RoundManager>().SetTempPointMonster(pointMonster);
     }
 }

@@ -39,7 +39,6 @@ public class ReadyButton : NetworkBehaviour
 
     public void ShowButton(bool isMonsterOrNot)
     {
-        readyButtonCanvas.SetActive(true);
         if (player.data.IsMonster == isMonsterOrNot)
         {
             readyButtonCanvas.SetActive(true);
@@ -50,6 +49,7 @@ public class ReadyButton : NetworkBehaviour
     {
         readyButton.gameObject.SetActive(true);
         validation.gameObject.SetActive(false);
+        readyButtonCanvas.SetActive(false);
     }
 
     private void FunctionReadyButton()
@@ -91,7 +91,5 @@ public class ReadyButton : NetworkBehaviour
     public void PlayerReadyRpc(string id, bool ready)
     {
         gameManager.SetPlayerReady(id, ready);
-
-        gameManager.Show();
     }
 }

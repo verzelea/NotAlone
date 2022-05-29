@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,8 +19,10 @@ public class GameManager : MonoBehaviour
     private GameObject GameCanvas;
 
     RoundManager roundManager;
-    private Scene? scene = null;
     public bool sceneIsLoading = false;
+
+    [SerializeField]
+    private TextMeshProUGUI roundText;
 
     void Start()
     {
@@ -27,37 +30,39 @@ public class GameManager : MonoBehaviour
         GameCanvas = gameObject.transform.Find("GameCanvas").gameObject;
         LobbyCanvas.SetActive(true);
         roundManager = GetComponent<RoundManager>();
+        roundText = gameObject.transform.Find("GameCanvas/RoundBox/Text").GetComponent<TextMeshProUGUI>();
     }
 
-    private void Update()
+    private async void Update()
     {
         if (!isGame || !CheckAllPlayerReady())
         {
             return;
         }
 
-        etape = EnumStatic.Next(etape);                
+        etape = EnumStatic.Next(etape);
+        roundText.text = EnumStatic.GetEnumDescription(etape);
+        roundManager.SetPlayerReadyToFalse();
         switch (etape)
         {
             case Round.Survior:
-                roundManager.SurvivorSetUp(players);
+                roundManager.Phase1();
                 break;
             case Round.Monster:
-                roundManager.MonsterSetUp(players);
+                roundManager.Phase2();
                 break;
             case Round.Resolve:
-                roundManager.ResolveSetUp(players);
+                await roundManager.Phase3Async();
                 break;
             case Round.Reset:
-                roundManager.ResetSetUp(players);
+                roundManager.Phase4(players);
                 break;
-        }        
+        }
     }
 
-    public void StartGame()
+    public async void StartGame()
     {
-        etape = roundManager.InitGame(players);
-        Show();
+        etape = await roundManager.InitGameAsync(players);
     }
 
     public void RegisterPlayer(string netId, Player player, bool isLocalPlayer, bool isServer)
@@ -71,21 +76,19 @@ public class GameManager : MonoBehaviour
             localPlayer = netId;
         }
         this.isServer = isServer;
-
-        Show();
     }
 
     public Dictionary<string, Player> GetPlayers() => players;
 
     //Delete
-    public void Show()
+    public void Show(string source, Dictionary<string, Player> pp)
     {
         string affiche = "";
-        foreach ((string p, Player e) in players)
+        foreach ((string k, Player e) in pp)
         {
-            affiche += p + " : "+ e.data.IsReady  +"  ";
+            affiche += k + " : "+ e.data.IsReady  +"  ";
         }
-        Debug.Log(affiche);
+        Debug.Log(source + " " + affiche);
     }
 
     public int CountPlayer()
@@ -108,7 +111,11 @@ public class GameManager : MonoBehaviour
 
     public void SetPlayerReady(string id, bool change)
     {
-        Debug.Log("player " + id + " is " + change);
         players[id].data.IsReady = change;
+    }
+
+    public void SetPlayerLocation(string id, LocationEnum change)
+    {
+        players[id].data.Location = change;
     }
 }

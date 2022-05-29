@@ -1,6 +1,6 @@
 using Mirror;
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerSetup : NetworkBehaviour
 {
@@ -13,16 +13,17 @@ public class PlayerSetup : NetworkBehaviour
     GameObject objectToDelete;
 
     GameObject manager;
-    private Scene scene;
 
     Transform locationCanvas;
 
     LocationManager locationManager;
 
+    public bool? keepIsGame;
+
     // Start is called before the first frame update, when Client come on Server
     public override void OnStartClient()
     {
-        if (!isLocalPlayer || scene.name == "Game")
+        if (!isLocalPlayer)
         {
             objectToDelete.SetActive(false);
         }
@@ -46,20 +47,27 @@ public class PlayerSetup : NetworkBehaviour
 
     private void Update()
     {
-        scene = SceneManager.GetActiveScene();
+        if (!isLocalPlayer)
+        {
+            return;
+        }
 
-        if (scene.name == "Lobby")
+        if(keepIsGame.HasValue && keepIsGame == gameManager.isGame)
+        {
+            return;
+        }
+        keepIsGame = gameManager.isGame;
+
+        if (!keepIsGame.Value)
         {
             SetupLobby();
             if (isServer)
             {
-                SetupLobbyServer();
-                
+                SetupLobbyServerAsync();
             }
             CloseGame();
         }
-
-        if (scene.name == "Game")
+        else
         {
             SetupGame();
             if (isServer)
@@ -76,9 +84,9 @@ public class PlayerSetup : NetworkBehaviour
         chat.SetActive(true);
     }
 
-    private void SetupLobbyServer()
+    private async Task SetupLobbyServerAsync()
     {
-        startButton.AddStartButton();
+        await startButton.AddStartButtonAsync();
     }
 
     private void SetupGame()

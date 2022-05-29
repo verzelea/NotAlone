@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameSetUp : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class GameSetUp : MonoBehaviour
     [SerializeField]
     private GameObject endScreen;
 
-    private Scene? scene = null;
+    private bool? keepIsGame;
 
     // Start is called before the first frame update
     void Start()
@@ -29,20 +28,19 @@ public class GameSetUp : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        var tmp = SceneManager.GetActiveScene();
-        if (tmp != scene)
+        if(keepIsGame == gameManager.isGame)
         {
-            scene = tmp;
-            if (scene?.name == "Lobby")
-            {
-                SetupLobby();
-            }
-            else if (scene?.name == "Game")
-            {
-                SetupGame();
-            }
+            return;
         }
-        return;
+        keepIsGame = gameManager.isGame;
+        if (!keepIsGame.Value)
+        {
+            SetupLobby();
+        }
+        else
+        {
+            SetupGame();
+        }
     }
 
     public void SetupGame()
@@ -51,7 +49,6 @@ public class GameSetUp : MonoBehaviour
         GameCanvas.SetActive(true);
         LobbyCanvas.SetActive(false);
         updateChat.ResetText();
-        gameManager.isGame = true;
         gameManager.StartGame();
     }
 
@@ -61,7 +58,6 @@ public class GameSetUp : MonoBehaviour
         endScreen.SetActive(false);
         GameCanvas.SetActive(false);
         LobbyCanvas.SetActive(true);
-        gameManager.isGame = false;
         updateChat.ResetText();
     }
 

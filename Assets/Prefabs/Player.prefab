@@ -2712,8 +2712,8 @@ GameObject:
   - component: {fileID: 499772754903029755}
   - component: {fileID: 5851651702223920046}
   - component: {fileID: 492896952205929482}
-  - component: {fileID: 4804691533175796185}
   - component: {fileID: 6609078726773078781}
+  - component: {fileID: 3210730243950517468}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2832,18 +2832,6 @@ MonoBehaviour:
   validation: {fileID: 0}
   gameManager: {fileID: 0}
   readyButtonCanvas: {fileID: 0}
---- !u!114 &4804691533175796185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8940354517801514334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f91139bf074b29847b75e4fcee3655ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6609078726773078781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2858,6 +2846,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+--- !u!114 &3210730243950517468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940354517801514334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8199aec0a5eabca45a4602534d2f0bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8940354518190283627
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-using Mirror;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +26,7 @@ public class VictoryManager : MonoBehaviour
     private Button buttonMenu;
 
     private GameManager gameManager;
-
+    private ChangeStatutGame changeStatutGame;
 
     public float pointSurvivant = 0.1f;
 
@@ -43,12 +42,12 @@ public class VictoryManager : MonoBehaviour
         descriptionEnd = gameObject.transform.Find("EndCanvas/EndScreen/Description").GetComponent<TMP_Text>();
         buttonMenu = gameObject.transform.Find("EndCanvas/EndScreen/ReturnButton").GetComponent<Button>();
 
+        gameManager = GetComponent<GameManager>();
         tokenSurvivor.enabled = false;
         tokenMonster.enabled = false;
 
-        gameManager = GetComponent<GameManager>();
-        pointSurvivant = (float)1 / (12 + gameManager.CountPlayer());
-        pointMonstre = (float)1 / (6 + gameManager.CountPlayer());
+        pointSurvivant = (float)1 / (2 + gameManager.CountPlayer());
+        pointMonstre = (float)1 / (1 + gameManager.CountPlayer());
     }
 
     //Ajoute n points pour les survivants
@@ -89,16 +88,26 @@ public class VictoryManager : MonoBehaviour
     //Ajoute le bouton de retour au Lobby, et y associe la méthode de retour
     public void AddReturnButton()
     {
+        gameManager.GetPlayers().TryGetValue(gameManager.localPlayer, out Player local);
+        changeStatutGame = local.gameObject.GetComponent<ChangeStatutGame>();
+
         buttonMenu.onClick.AddListener(ReturnLobbyCliked);
         buttonMenu.gameObject.SetActive(true);
     }
 
     private void ReturnLobbyCliked()
     {
-        if (!gameManager.sceneIsLoading)
-        {
-            gameManager.sceneIsLoading = true;
-            NetworkManager.singleton.ServerChangeScene("Lobby");
+        var players = gameManager.GetPlayers();
+        foreach (Player player in players.Values) {
+            changeStatutGame.StopGame(player);
         }
+    }
+
+    public void ResetManager()
+    {
+        sliderPlayer.value = 0;
+        sliderMonster.value = 0;
+        tokenSurvivor.enabled = false;
+        tokenMonster.enabled = false;
     }
 }

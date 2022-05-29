@@ -1,4 +1,5 @@
 using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterManager : NetworkBehaviour
@@ -11,28 +12,28 @@ public class MonsterManager : NetworkBehaviour
         roundManager = GameObject.Find("GameManager").GetComponent<RoundManager>();
     }
 
-    /*[Client]
-    public void SetMonsterClient(int choose)
+    [Client]
+    public void SetMonster(int choose)
     {
-        Debug.Log("Enter Client with " + choose);
-        if (!isServer)
+        if (isServer)
         {
-            return;
+            SetMonsterRpc(choose);
         }
-        SetMonsterRpc(choose);
-    }*/
+        else
+        {
+            SetMonsterCmd(choose);
+        }
+    }
 
     [Command]
-    public void SetMonsterCmd(int choose)
+    private void SetMonsterCmd(int choose)
     {
-        Debug.Log("Enter Cmd with " + choose);
         SetMonsterRpc(choose);
     }
 
     [ClientRpc]
-    public void SetMonsterRpc(int choose)
+    private void SetMonsterRpc(int choose)
     {
-        Debug.Log("Enter Rpc with " + choose);
         roundManager.SetMonster(choose);
     }
 }

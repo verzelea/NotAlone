@@ -1,6 +1,6 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Mirror;
 
 public class StartButton : MonoBehaviour
 {
@@ -8,30 +8,32 @@ public class StartButton : MonoBehaviour
     private Button startButton;
 
     private GameManager gameManager;
+    ChangeStatutGame changeStatutGame;
 
-    public void AddStartButton()
+    public async Task AddStartButtonAsync()
     {
+        gameManager = GetComponent<GameManager>();
         startButton = gameObject.transform.Find("LobbyCanvas/StartButton").GetComponent<Button>();
         startButton.gameObject.SetActive(true);
-        FunctionStartButton();
-        gameManager = GetComponent<GameManager>();
+        
+        await FunctionStartButtonAsync();
     }
 
-    private void FunctionStartButton()
+    private async Task FunctionStartButtonAsync()
     {
+        Player local;
+        bool checkGetvalue = gameManager.GetPlayers().TryGetValue(gameManager.localPlayer, out local);
+        while (!checkGetvalue)
+        {
+            await Task.Delay(25);
+            checkGetvalue = gameManager.GetPlayers().TryGetValue(gameManager.localPlayer, out local);
+        }
+        changeStatutGame = local.gameObject.GetComponent<ChangeStatutGame>();
         startButton.onClick.AddListener(StartGameCliked);
     }
 
     private void StartGameCliked()
     {
-        if (!gameManager.sceneIsLoading)
-        {
-            gameManager.sceneIsLoading = true;
-            NetworkManager.singleton.ServerChangeScene("Game");
-            if(!NetworkClient.ready)
-            {
-                NetworkClient.Ready();
-            }
-        }
+        changeStatutGame.LaunchGame();
     }
 }

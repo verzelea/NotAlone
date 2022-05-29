@@ -1,112 +1,224 @@
 using Mirror;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoundManager : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI roundText;
+    private Image tokenSurvivor;
+
+    [SerializeField]
+    private Image tokenMonster;
 
     GameManager gameManager;
 
     VictoryManager victoryManager;
 
+    private bool waitSetMonster = false;
+
+    string idMonster;
+    private int? tempPointMonster;
+
     private void Start()
     {
-        roundText = gameObject.transform.Find("GameCanvas/RoundBox/Text").GetComponent<TextMeshProUGUI>();
         gameManager = GetComponent<GameManager>();
         victoryManager = GetComponent<VictoryManager>();
+        tokenSurvivor = gameObject.transform.Find("GameCanvas/Token/TokenSurvivor").GetComponent<Image>();
+        tokenMonster = gameObject.transform.Find("GameCanvas/Token/TokenMonster").GetComponent<Image>();
     }
 
-    public Round InitGame(Dictionary<string, Player> players)
+    public async Task<Round> InitGameAsync(Dictionary<string, Player> players)
     {
         if (!NetworkClient.ready)
         {
             NetworkClient.Ready();
         }
+        tokenSurvivor.enabled = false;
+        tokenMonster.enabled = false;
         RandomMonster(players);
-        roundText.text = EnumStatic.GetEnumDescription(Round.Survior);
-        SurvivorSetUp(players);
+        while (waitSetMonster)
+        {
+            await Task.Delay(25);
+        }
+        victoryManager.ResetManager();
+        Phase1();
         return Round.Survior;
     }
 
     private void RandomMonster(Dictionary<string, Player> players)
     {
+        waitSetMonster = true;
         if (!gameManager.isServer)
         {
             return;
         }
-        int random = new System.Random().Next(players.Count);
-        Debug.Log("random = "+random);
-        players.TryGetValue(gameManager.localPlayer, out Player local);
-        local.SetMonsterClient(random);
-    }
+        int random = new System.Random().Next(players.Count)+1;
+        idMonster = "" + random;
 
-    public void SetMonster(int choose)
-    {
-        var players = gameManager.GetPlayers();
         foreach (Player player in players.Values)
         {
-            if (choose == 0)
+            player.GetComponent<MonsterManager>().SetMonster(random);
+        }        
+    }
+
+    public void SetMonster(int random)
+    {
+        foreach (Player player in gameManager.GetPlayers().Values)
+        {
+            player.data.IsMonster = random == player.netId;
+        }
+
+        if (gameManager.localPlayer == "" + random)
+        {
+            tokenMonster.enabled = true;
+        }
+        else
+        {
+            tokenSurvivor.enabled = true;
+        }
+        waitSetMonster = false;
+    }
+
+    private bool CheckLocation()
+    {
+        foreach(Player player in gameManager.GetPlayers().Values)
+        {
+            if (!player.data.Location.HasValue)
             {
-                player.data.IsMonster = true;
+                return false;
             }
-            else
-            {
-                player.data.IsMonster = false;
-            }
-            choose--;
+        }
+        return true;
+    }
+
+    public void SetTempPointMonster(int value)
+    {
+        tempPointMonster = value;
+    }
+
+    public void SetPlayerReadyToFalse()
+    {
+        var players = gameManager.GetPlayers();
+        foreach(Player p in players.Values)
+        {
+            p.data.IsReady = false;
         }
     }
 
-    public void ChangeText(Round etape)
+    public void SetPlayerReadyToTrue()
     {
-        roundText.text = EnumStatic.GetEnumDescription(etape);
+        var players = gameManager.GetPlayers();
+        foreach (Player p in players.Values)
+        {
+            p.data.IsReady = true;
+        }
     }
 
-    public void ResetSetUp(Dictionary<string, Player> players)
+    public void Phase4(Dictionary<string, Player> players)
     {
-        Debug.Log("Phase 4");
+        //Debug.Log("Phase 4");
         victoryManager.AddPointPlayer(1);
 
-        players.TryGetValue(gameManager.localPlayer, out Player local);
-        local.ResetButton();
+        foreach ((string key, Player player) in players)
+        {
+            player.data.Location = null;
+            if (key == gameManager.localPlayer)
+            {
+                player.ResetButton();
+            }
+        }
+        SetPlayerReadyToTrue();
     }
 
-    public void ResolveSetUp(Dictionary<string, Player> players)
+    public async Task Phase3Async()
     {
-        Debug.Log("Phase 3");
+        
+        if (gameManager.isServer)
+        {
+            await Phase3ServeurAsync();
+        }
+        else
+        {
+            Phase3Client();
+        }
+        
+        while (!tempPointMonster.HasValue)
+        {
+           await Task.Delay(25);
+        }
+        victoryManager.AddPointMonstre(tempPointMonster.Value);
+        tempPointMonster = null;
+        SetPlayerReadyToTrue();
     }
 
-    public void MonsterSetUp(Dictionary<string, Player> players)
+    private void Phase3Client()
     {
-        Debug.Log("Phase 2");
+        var players = gameManager.GetPlayers();
+        Player local = players.GetValueOrDefault(gameManager.localPlayer);
+
+        if (!local.isServer)
+        {
+            local.SendLocationCmd(local.data.Location.Value);
+        }
+    }
+
+    private async Task Phase3ServeurAsync()
+    {
+        while (!CheckLocation())
+        {
+            await Task.Delay(25);
+        }
+        var players = gameManager.GetPlayers();
+        Player local = players.GetValueOrDefault(gameManager.localPlayer);
+        
+        LocationEnum monsterLocation = players.GetValueOrDefault(idMonster).data.Location.Value;
+        int pointMonster = 0;
         foreach (Player player in players.Values)
         {
-            if (!player.data.IsMonster)
+            if (player.data.IsMonster)
+            {
+                continue;
+            }
+            if (player.data.Location == monsterLocation)
+            {
+                pointMonster++;
+            }
+        }
+        local.SendPointMonster(pointMonster);
+    }
+
+
+    [Client]
+    public void Phase2()
+    {
+        var players = gameManager.GetPlayers();
+        //Debug.Log("Phase 2");
+        foreach ((string key, Player player) in players)
+        {
+            if (player.data.IsMonster)
+            {
+                player.data.IsReady = false;
+                if (key == gameManager.localPlayer)
+                {
+                    player.ShowButton(true);
+                }
+            }
+            else
             {
                 player.data.IsReady = true;
             }
-            else
-            {
-                player.data.IsReady = false;
-            }
         }
-
-        if (!NetworkClient.ready)
-        {
-            NetworkClient.Ready();
-        }
-        players.TryGetValue(gameManager.localPlayer, out Player local);
-        local.ShowButton(true);
     }
 
     [Client]
-    public void SurvivorSetUp(Dictionary<string, Player> players)
+    public void Phase1()
     {
-        Debug.Log("Phase 1");
-        foreach (Player player in players.Values)
+        var players = gameManager.GetPlayers();
+        foreach ((string key, Player player) in players)
         {
             if (player.data.IsMonster)
             {
@@ -115,14 +227,12 @@ public class RoundManager : MonoBehaviour
             else
             {
                 player.data.IsReady = false;
+
+                if(key == gameManager.localPlayer)
+                {
+                    player.ShowButton(false);
+                }
             }
         }
-
-        if (!NetworkClient.ready)
-        {
-            NetworkClient.Ready();
-        }
-        players.TryGetValue(gameManager.localPlayer, out Player local);
-        local.ShowButton(false);
     }
 }

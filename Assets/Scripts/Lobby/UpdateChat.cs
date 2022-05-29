@@ -2,13 +2,17 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(TMP_Text))]
 public class UpdateChat : MonoBehaviour
 {
     public readonly ArrayList chat = new ArrayList();
 
     [SerializeField]
-    private TMP_Text chatText = null;
+    private TMP_Text chatText;
+
+    private void Start()
+    {
+        chatText = gameObject.transform.Find("ChatCanvas/ChatUI/ScrollView/Viewport/ChatTextField").GetComponent<TMP_Text>();
+    }
 
     //Ajouter le message à la liste des messages
     public void Add(string message)
@@ -29,5 +33,11 @@ public class UpdateChat : MonoBehaviour
         {
             chatText.text += res;
         }
+    }
+
+    public void ResetText()
+    {
+        chat.Clear();
+        UpdateText();
     }
 }

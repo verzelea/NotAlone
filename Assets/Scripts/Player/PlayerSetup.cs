@@ -1,88 +1,112 @@
 using Mirror;
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerSetup : NetworkBehaviour
 {
-    private StartButton startButton = null;
-    private VictoryManager returnButton = null;
+    private StartButton startButton;
+    private VictoryManager victoryManager;
 
-    private LobbyManager lobbyManager = null;
+    private GameManager gameManager;
 
     [SerializeField]
     GameObject objectToDelete;
 
-    private Scene scene;
+    GameObject manager;
 
-    // Start is called before the first frame update
-    private void Start()
+    Transform locationCanvas;
+
+    LocationManager locationManager;
+
+    public bool? keepIsGame;
+
+    // Start is called before the first frame update, when Client come on Server
+    public override void OnStartClient()
     {
-        if (!isLocalPlayer || scene.name == "Game")
+        if (!isLocalPlayer)
         {
             objectToDelete.SetActive(false);
         }
+        manager = GameObject.Find("GameManager");
+        locationCanvas = gameObject.transform.Find("PlayerCanvas/LocationUI");
+        locationManager = GetComponent<LocationManager>();
+        locationManager.SetUpLocations(manager, locationCanvas);
+        victoryManager = manager.GetComponent<VictoryManager>();
+        gameManager = manager.GetComponent<GameManager>();
+        startButton = manager.GetComponent<StartButton>();
+
+        AddPlayer();
     }
 
-    public override void OnStartClient()
-    {
-        base.OnStartClient();
-        
-        scene = SceneManager.GetActiveScene();
-        GameObject manager;
-
-        if (scene.name == "Lobby")
-        {
-            manager = GameObject.Find("LobbyManager");
-            SetupLobby(manager);
-            if (isServer)
-            {
-                SetupLobbyServer(manager);
-            }
-        }
-
-        if (scene.name == "Game")
-        {
-            manager = GameObject.Find("GameManager");
-            SetupGame(manager);
-            if (isServer)
-            {
-                SetupGameServer(manager);
-            }
-        }
-    }
-
-    private void SetupLobby(GameObject manager)
+    private void AddPlayer()
     {
         string netId = GetComponent<NetworkIdentity>().netId.ToString();
         Player player = GetComponent<Player>();
-        lobbyManager = manager.GetComponent<LobbyManager>();
-        lobbyManager.RegisterPlayer(netId, player);
+        gameManager.RegisterPlayer(netId, player, isLocalPlayer, isServer);
+    }
 
+    private void Update()
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
+        if(keepIsGame.HasValue && keepIsGame == gameManager.isGame)
+        {
+            return;
+        }
+        keepIsGame = gameManager.isGame;
+
+        if (!keepIsGame.Value)
+        {
+            SetupLobby();
+            if (isServer)
+            {
+                SetupLobbyServerAsync();
+            }
+            CloseGame();
+        }
+        else
+        {
+            SetupGame();
+            if (isServer)
+            {
+                SetupGameServer();
+                //CloseLobbyServer(manager);
+            }
+        }
+    }
+
+    private void SetupLobby()
+    {
         var chat = gameObject.transform.Find("PlayerCanvas/ChatUI").gameObject;
         chat.SetActive(true);
     }
 
-    private void SetupLobbyServer(GameObject manager)
+    private async Task SetupLobbyServerAsync()
     {
-        startButton = manager.GetComponent<StartButton>();
-        startButton.AddStartButton();
+        await startButton.AddStartButtonAsync();
     }
 
-    private void SetupGame(GameObject manager)
+    private void SetupGame()
     {
         if (isLocalPlayer)
         {
-            var objectButton = gameObject.transform.Find("PlayerCanvas/LocationUI");
-            objectButton.gameObject.SetActive(true);
-
-            var locationManager = GetComponent<LocationManager>();
-            locationManager.SetUpLocations(manager, objectButton);
+            locationCanvas.gameObject.SetActive(true);
         }
     }
 
-    private void SetupGameServer(GameObject manager)
+    private void CloseGame()
     {
-        returnButton = manager.GetComponent<VictoryManager>();
-        returnButton.AddReturnButton();
+        if (isLocalPlayer)
+        {
+            locationCanvas.gameObject.SetActive(false);
+        }
+    }
+
+    private void SetupGameServer()
+    {
+        victoryManager.AddReturnButton();
     }
 }

@@ -3,7 +3,7 @@ NotAlone (temporary name) is a Unity project about an asymmetrical video game. T
 
 ## Launch game on your desktop (from fedora workstation 36 brute)
 Step by step to launch the game.
-1. In the Github Main Page of the project, download the project in a zip file (),  
+1. In the Github Main Page of the project, download the project in a zip file (**Code**>**Download ZIP**),  
 or  
 Use command `git clone https://github.com/verzelea/NotAlone.git`in a command terminal.
 2. In the folder *NotAlone/Build*, execute the **NotAlone.exe** file.

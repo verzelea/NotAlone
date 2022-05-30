@@ -80,16 +80,6 @@ public class GameManager : MonoBehaviour
 
     public Dictionary<string, Player> GetPlayers() => players;
 
-    //Delete
-    public void Show(string source, Dictionary<string, Player> pp)
-    {
-        string affiche = "";
-        foreach ((string k, Player e) in pp)
-        {
-            affiche += k + " : "+ e.data.IsReady  +"  ";
-        }
-        Debug.Log(source + " " + affiche);
-    }
 
     public int CountPlayer()
     {

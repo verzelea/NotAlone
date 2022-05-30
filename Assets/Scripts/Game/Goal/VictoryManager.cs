@@ -46,8 +46,8 @@ public class VictoryManager : MonoBehaviour
         tokenSurvivor.enabled = false;
         tokenMonster.enabled = false;
 
-        pointSurvivant = (float)1 / (2 + gameManager.CountPlayer());
-        pointMonstre = (float)1 / (1 + gameManager.CountPlayer());
+        pointSurvivant = (float)1 / (12 + gameManager.CountPlayer());
+        pointMonstre = (float)1 / (6 + gameManager.CountPlayer());
     }
 
     //Ajoute n points pour les survivants

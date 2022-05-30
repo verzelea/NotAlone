@@ -2749,7 +2749,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140f1ea3222e54440bde19a1c34db5bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundText: {fileID: 0}
   tokenSurvivor: {fileID: 0}
   tokenMonster: {fileID: 0}
 --- !u!114 &1463795143

@@ -1,8 +1,6 @@
 using Mirror;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -120,7 +118,6 @@ public class RoundManager : MonoBehaviour
 
     public void Phase4(Dictionary<string, Player> players)
     {
-        //Debug.Log("Phase 4");
         victoryManager.AddPointPlayer(1);
 
         foreach ((string key, Player player) in players)
@@ -196,7 +193,6 @@ public class RoundManager : MonoBehaviour
     public void Phase2()
     {
         var players = gameManager.GetPlayers();
-        //Debug.Log("Phase 2");
         foreach ((string key, Player player) in players)
         {
             if (player.data.IsMonster)

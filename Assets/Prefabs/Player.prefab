@@ -1438,7 +1438,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ready
+  m_text: Confirm Choice
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1465,8 +1465,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48
-  m_fontSizeBase: 48
+  m_fontSize: 38
+  m_fontSizeBase: 38
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2784,6 +2784,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   id: 
+  gameManager: {fileID: 0}
 --- !u!114 &499772754903029755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2858,6 +2859,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8199aec0a5eabca45a4602534d2f0bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!1 &8940354518190283627
 GameObject:
   m_ObjectHideFlags: 0

@@ -45,7 +45,7 @@ public class PlayerSetup : NetworkBehaviour
         gameManager.RegisterPlayer(netId, player, isLocalPlayer, isServer);
     }
 
-    private void Update()
+    private async void Update()
     {
         if (!isLocalPlayer)
         {
@@ -63,7 +63,7 @@ public class PlayerSetup : NetworkBehaviour
             SetupLobby();
             if (isServer)
             {
-                SetupLobbyServerAsync();
+                await SetupLobbyServerAsync();
             }
             CloseGame();
         }

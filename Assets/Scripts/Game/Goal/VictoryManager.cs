@@ -4,33 +4,18 @@ using UnityEngine.UI;
 
 public class VictoryManager : MonoBehaviour
 {
-    [SerializeField]
     private Slider sliderPlayer;
-
-    [SerializeField]
     private Slider sliderMonster;
-
-    [SerializeField]
     private GameObject endCanvas;
-
-    [SerializeField]
     private Image tokenSurvivor;
-
-    [SerializeField]
     private Image tokenMonster;
-
-    [SerializeField]
     private TMP_Text descriptionEnd;
-
-    [SerializeField]
     private Button buttonMenu;
-
     private GameManager gameManager;
     private ChangeStatutGame changeStatutGame;
 
-    public float pointSurvivant = 0.1f;
-
-    public float pointMonstre = 0.1f;
+    private float pointSurvivant = 0.1f;
+    private float pointMonstre = 0.1f;
 
     private void Start()
     {
@@ -50,21 +35,21 @@ public class VictoryManager : MonoBehaviour
         pointMonstre = (float)1 / (6 + gameManager.CountPlayer());
     }
 
-    //Ajoute n points pour les survivants
+    //Add param n points for the survivors
     public bool AddPointPlayer(int n)
     {
         sliderPlayer.value += pointSurvivant * n;
         return CheckVictory();
     }
 
-    //Ajoute n points pour le monstre
+    //Add param n points for the monster
     public bool AddPointMonstre(int n)
     {
         sliderMonster.value += pointSurvivant * n;
         return CheckVictory();
     }
 
-    //Verifie si les survivants ou le monstre ont atteint la condition de victoire
+    //Check if the survivors or the monster reached the goal of victory
     private bool CheckVictory()
     {
         if(sliderMonster.value >= 1 || sliderPlayer.value >= 1)
@@ -85,16 +70,17 @@ public class VictoryManager : MonoBehaviour
         return false;
     }
 
-    //Ajoute le bouton de retour au Lobby, et y associe la méthode de retour
+    //Add the function in the return button
     public void AddReturnButton()
     {
-        gameManager.GetPlayers().TryGetValue(gameManager.localPlayer, out Player local);
+        gameManager.GetPlayers().TryGetValue(gameManager.GetLocalPlayer(), out Player local);
         changeStatutGame = local.gameObject.GetComponent<ChangeStatutGame>();
 
         buttonMenu.onClick.AddListener(ReturnLobbyCliked);
         buttonMenu.gameObject.SetActive(true);
     }
 
+    //Stop the game and return clients to lobby
     private void ReturnLobbyCliked()
     {
         var players = gameManager.GetPlayers();
@@ -103,6 +89,7 @@ public class VictoryManager : MonoBehaviour
         }
     }
 
+    //Reset this manager for the next game
     public void ResetManager()
     {
         sliderPlayer.value = 0;

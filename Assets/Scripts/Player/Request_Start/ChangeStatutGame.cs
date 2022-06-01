@@ -11,17 +11,19 @@ public class ChangeStatutGame : NetworkBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
+    //Set the scene of each clients for start the game
     [ClientRpc]
     public void LaunchGame()
     {
-        gameManager.isGame = true;
+        gameManager.SetIsGame(true);
     }
 
+    //Set the scene of each clients for return on the lobby
     [ClientRpc]
     public void StopGame(Player player)
     {
-        player.data.Location = null;
+        player.SetLocation(null);
         player.ResetButton();
-        gameManager.isGame = false;
+        gameManager.SetIsGame(false);
     }
 }

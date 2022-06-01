@@ -1,5 +1,6 @@
 using System.ComponentModel;
 
+//Enum to set the different round in one turn of the game
 public enum Round
 {
     [Description("Phase 1")]

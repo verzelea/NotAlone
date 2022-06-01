@@ -1,20 +1,10 @@
 using Mirror;
 using UnityEngine;
 
-public class Player : NetworkBehaviour
+public partial class Player : NetworkBehaviour
 {
-    ReadyButton readyButton;
-
-    public string id;
-    public PlayerData data = new PlayerData();
-    [SerializeField]
-    private GameManager gameManager;
-
-    private void Start()
-    {
-        readyButton = GetComponent<ReadyButton>();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-    }
+    private string id;
+    private PlayerData data = new PlayerData();
 
     public void SetPlayer(string newname)
     {
@@ -36,27 +26,15 @@ public class Player : NetworkBehaviour
         return id;
     }
 
-    public void SetLocation(LocationEnum location)
+    public void SetLocation(LocationEnum? location)
     {
         data.Location = location;
     }
 
     public LocationEnum? GetLocation()
     {
+        Debug.Log(data);
         return data.Location;
-    }
-
-    public void ShowButton(bool isMonsterOrNot)
-    {
-        if (isLocalPlayer)
-        {
-            readyButton.ShowButton(isMonsterOrNot);
-        }
-    }
-
-    public void ResetButton()
-    {
-        readyButton.ResetButton();
     }
 
     public void SetIsMonster(bool change)
@@ -64,15 +42,18 @@ public class Player : NetworkBehaviour
         data.IsMonster = change;
     }
 
-    [Command]
-    public void SendLocationCmd(LocationEnum location)
+    public bool GetIsMonster()
     {
-        gameManager.SetPlayerLocation(netId.ToString(), location);
+        return data.IsMonster;
     }
 
-    [ClientRpc]
-    public void SendPointMonster(int pointMonster)
+    public void SetIsReady(bool change)
     {
-        GameObject.Find("GameManager").GetComponent<RoundManager>().SetTempPointMonster(pointMonster);
+        data.IsReady = change;
+    }
+
+    public bool GetIsReady()
+    {
+        return data.IsReady;
     }
 }

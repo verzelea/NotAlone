@@ -6,19 +6,15 @@ public class PlayerSetup : NetworkBehaviour
 {
     private StartButton startButton;
     private VictoryManager victoryManager;
-
     private GameManager gameManager;
+    private GameObject manager;
+    private Transform locationCanvas;
+    private LocationManager locationManager;
 
     [SerializeField]
-    GameObject objectToDelete;
+    private GameObject objectToDelete;
 
-    GameObject manager;
-
-    Transform locationCanvas;
-
-    LocationManager locationManager;
-
-    public bool? keepIsGame;
+    private bool? keepIsGame;
 
     // Start is called before the first frame update, when Client come on Server
     public override void OnStartClient()
@@ -30,7 +26,7 @@ public class PlayerSetup : NetworkBehaviour
         manager = GameObject.Find("GameManager");
         locationCanvas = gameObject.transform.Find("PlayerCanvas/LocationUI");
         locationManager = GetComponent<LocationManager>();
-        locationManager.SetUpLocations(manager, locationCanvas);
+        locationManager.SetUpLocations(locationCanvas);
         victoryManager = manager.GetComponent<VictoryManager>();
         gameManager = manager.GetComponent<GameManager>();
         startButton = manager.GetComponent<StartButton>();
@@ -38,6 +34,7 @@ public class PlayerSetup : NetworkBehaviour
         AddPlayer();
     }
 
+    //Add the new player into the gameManager
     private void AddPlayer()
     {
         string netId = GetComponent<NetworkIdentity>().netId.ToString();
@@ -45,6 +42,7 @@ public class PlayerSetup : NetworkBehaviour
         gameManager.RegisterPlayer(netId, player, isLocalPlayer, isServer);
     }
 
+    //Set the player with the change in the scene (Game is launch or not)
     private async void Update()
     {
         if (!isLocalPlayer)
@@ -52,11 +50,11 @@ public class PlayerSetup : NetworkBehaviour
             return;
         }
 
-        if(keepIsGame.HasValue && keepIsGame == gameManager.isGame)
+        if(keepIsGame.HasValue && keepIsGame == gameManager.GetIsGame())
         {
             return;
         }
-        keepIsGame = gameManager.isGame;
+        keepIsGame = gameManager.GetIsGame();
 
         if (!keepIsGame.Value)
         {
@@ -73,22 +71,24 @@ public class PlayerSetup : NetworkBehaviour
             if (isServer)
             {
                 SetupGameServer();
-                //CloseLobbyServer(manager);
             }
         }
     }
 
+    //Set the player for the lobby
     private void SetupLobby()
     {
         var chat = gameObject.transform.Find("PlayerCanvas/ChatUI").gameObject;
         chat.SetActive(true);
     }
 
+    //Set the lobby for the serveur
     private async Task SetupLobbyServerAsync()
     {
         await startButton.AddStartButtonAsync();
     }
 
+    //Set the game
     private void SetupGame()
     {
         if (isLocalPlayer)
@@ -97,6 +97,7 @@ public class PlayerSetup : NetworkBehaviour
         }
     }
 
+    //Stop the game
     private void CloseGame()
     {
         if (isLocalPlayer)
@@ -105,6 +106,7 @@ public class PlayerSetup : NetworkBehaviour
         }
     }
 
+    //Set game for the serveur
     private void SetupGameServer()
     {
         victoryManager.AddReturnButton();

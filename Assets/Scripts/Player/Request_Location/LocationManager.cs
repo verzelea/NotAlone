@@ -5,15 +5,40 @@ using UnityEngine.UI;
 public class LocationManager : NetworkBehaviour
 {
     private Player player;
-    
-    public void SetUpLocations(GameObject manager, Transform objectButton)
+    private bool tmpIsready = false;
+    private Transform locationCanvas;
+
+    private void Start()
+    {
+        locationCanvas = gameObject.transform.Find("PlayerCanvas/LocationUI");
+        player = GetComponent<Player>();
+    }
+
+    //If a location of a player is empty, all the location buttons is grey and non-interactive
+    private void Update()
+    {
+        if (tmpIsready == player.GetIsReady())
+        {
+            return;
+        }
+        tmpIsready = player.GetIsReady();
+
+        int children = locationCanvas.childCount;
+        for (int i = 0; i < children; ++i)
+        {
+            Button button = locationCanvas.GetChild(i).gameObject.GetComponent<Button>();
+            button.interactable = !tmpIsready;
+        }
+    }
+
+    //Set the function for each button Location
+    public void SetUpLocations(Transform objectButton)
     {
         if (!isLocalPlayer)
         {
             return;
         }
-
-        player = GetComponent<Player>();
+        
         int children = objectButton.childCount;
         for (int i = 0; i < children; ++i)
         {
@@ -55,6 +80,7 @@ public class LocationManager : NetworkBehaviour
         }
     }
 
+    //The function of the button location
     private void OnClickLocation(LocationEnum location)
     {
         player.SetLocation(location);

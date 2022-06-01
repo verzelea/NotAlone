@@ -1,3 +1,4 @@
+//Enum all locations from the game
 public enum LocationEnum
 {
     Antre,

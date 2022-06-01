@@ -5,6 +5,7 @@ using System.Reflection;
 
 public static class EnumStatic
 {
+    //Get the attribute Description form the enum value
     public static string GetEnumDescription(Round value)
     {
         FieldInfo fi = value.GetType().GetField(value.ToString());
@@ -19,6 +20,7 @@ public static class EnumStatic
         return value.ToString();
     }
 
+    //Take the next value in the enum (Send "Antre" form Location Enum, return "Jungle")
     public static T Next<T>(this T src) where T : struct
     {
         if (!typeof(T).IsEnum)

@@ -12,11 +12,9 @@ public class InputChat : NetworkBehaviour
     void Start()
     {
         update = GameObject.Find("GameManager").GetComponent<UpdateChat>();
-        
-        //update = GameObject.Find(manager).GetComponent<UpdateChat>();
     }
 
-    //On vérifie si le client appuie sur entrée et que le champ de saisie contient du texte
+    //Check if the button Enter is use and the text field is not empty
     public void Update()
     {
         if(Input.GetKeyDown(KeyCode.Return) 
@@ -26,7 +24,7 @@ public class InputChat : NetworkBehaviour
         }
     }
 
-    //Le client crée le message et l'envoi au serveur
+    //Client create a message and send it
     [Client]
     public void Send()
     {
@@ -34,7 +32,7 @@ public class InputChat : NetworkBehaviour
         string message = "\n" + player.GetPlayer() + " : " + inputField.text;
         if(isServer)
         {
-            //envoi directement le message si c'est l'host qui envoi le message
+            //Send directly the message if it's the host who send it
             UpdateTextFile(message);
         }
         else
@@ -44,14 +42,14 @@ public class InputChat : NetworkBehaviour
         inputField.text = string.Empty;
     }
 
-    //Le serveur demande à envoyer le message à tout le monde
+    //Serveur send the request to all clients
     [Command]
     public void SendChat(string message)
     {
         UpdateTextFile(message);
     }
 
-    //Le serveur envoi le message à tout le monde
+    //All clients add the new message
     [ClientRpc]
     public void UpdateTextFile(string response)
     {

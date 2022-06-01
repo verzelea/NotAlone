@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class UpdateChat : MonoBehaviour
 {
-    public readonly ArrayList chat = new ArrayList();
+    private readonly ArrayList chat = new ArrayList();
 
-    [SerializeField]
     private TMP_Text chatText;
 
     private void Start()
@@ -14,7 +13,7 @@ public class UpdateChat : MonoBehaviour
         chatText = gameObject.transform.Find("ChatCanvas/ChatUI/ScrollView/Viewport/ChatTextField").GetComponent<TMP_Text>();
     }
 
-    //Ajouter le message à la liste des messages
+    //Add the message to the list of messages
     public void Add(string message)
     {
         if(chat.Count>=20)
@@ -25,7 +24,7 @@ public class UpdateChat : MonoBehaviour
         UpdateText();
     }
 
-    //Met à jour le chat
+    //Update the chat text field
     public void UpdateText()
     {
         chatText.text = string.Empty;
@@ -35,6 +34,7 @@ public class UpdateChat : MonoBehaviour
         }
     }
 
+    //Reset the list and the text field
     public void ResetText()
     {
         chat.Clear();

@@ -2,15 +2,10 @@ using UnityEngine;
 
 public class GameSetUp : MonoBehaviour
 {
-    [SerializeField]
     private GameObject LobbyCanvas;
-    [SerializeField]
     private GameObject GameCanvas;
-    [SerializeField]
     private GameManager gameManager;
-    [SerializeField]
     private UpdateChat updateChat;
-    [SerializeField]
     private GameObject endScreen;
 
     private bool? keepIsGame;
@@ -28,11 +23,11 @@ public class GameSetUp : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(keepIsGame == gameManager.isGame)
+        if(keepIsGame == gameManager.GetIsGame())
         {
             return;
         }
-        keepIsGame = gameManager.isGame;
+        keepIsGame = gameManager.GetIsGame();
         if (!keepIsGame.Value)
         {
             SetupLobby();
@@ -45,7 +40,7 @@ public class GameSetUp : MonoBehaviour
 
     public void SetupGame()
     {
-        gameManager.sceneIsLoading = false;
+        gameManager.SetSceneIsLoading(false);
         GameCanvas.SetActive(true);
         LobbyCanvas.SetActive(false);
         updateChat.ResetText();
@@ -54,13 +49,10 @@ public class GameSetUp : MonoBehaviour
 
     public void SetupLobby()
     {
-        gameManager.sceneIsLoading = false;
+        gameManager.SetSceneIsLoading(false);
         endScreen.SetActive(false);
         GameCanvas.SetActive(false);
         LobbyCanvas.SetActive(true);
         updateChat.ResetText();
     }
-
-
-
 }

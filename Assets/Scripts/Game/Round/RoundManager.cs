@@ -6,19 +6,13 @@ using UnityEngine.UI;
 
 public class RoundManager : MonoBehaviour
 {
-    [SerializeField]
     private Image tokenSurvivor;
-
-    [SerializeField]
     private Image tokenMonster;
-
-    GameManager gameManager;
-
-    VictoryManager victoryManager;
+    private GameManager gameManager;
+    private VictoryManager victoryManager;
 
     private bool waitSetMonster = false;
-
-    string idMonster;
+    private string idMonster;
     private int? tempPointMonster;
 
     private void Start()
@@ -29,12 +23,9 @@ public class RoundManager : MonoBehaviour
         tokenMonster = gameObject.transform.Find("GameCanvas/Token/TokenMonster").GetComponent<Image>();
     }
 
+    //Start the game inside the roundManager
     public async Task<Round> InitGameAsync(Dictionary<string, Player> players)
     {
-        if (!NetworkClient.ready)
-        {
-            NetworkClient.Ready();
-        }
         tokenSurvivor.enabled = false;
         tokenMonster.enabled = false;
         RandomMonster(players);
@@ -47,10 +38,12 @@ public class RoundManager : MonoBehaviour
         return Round.Survior;
     }
 
-    private void RandomMonster(Dictionary<string, Player> players)
+    //Choose randomly one player to be the monster
+    private void RandomMonster()
     {
+        var players = gameManager.GetPlayers();
         waitSetMonster = true;
-        if (!gameManager.isServer)
+        if (!gameManager.GetIsServer())
         {
             return;
         }
@@ -63,14 +56,15 @@ public class RoundManager : MonoBehaviour
         }        
     }
 
+    //Change data of all players to say if he's the monster or not
     public void SetMonster(int random)
     {
         foreach (Player player in gameManager.GetPlayers().Values)
         {
-            player.data.IsMonster = random == player.netId;
+            player.SetIsMonster(random == player.netId);
         }
 
-        if (gameManager.localPlayer == "" + random)
+        if (gameManager.GetLocalPlayer() == "" + random)
         {
             tokenMonster.enabled = true;
         }
@@ -81,11 +75,12 @@ public class RoundManager : MonoBehaviour
         waitSetMonster = false;
     }
 
+    //Check if all players have chosen a location
     private bool CheckLocation()
     {
         foreach(Player player in gameManager.GetPlayers().Values)
         {
-            if (!player.data.Location.HasValue)
+            if (!player.GetLocation().HasValue)
             {
                 return false;
             }
@@ -93,37 +88,41 @@ public class RoundManager : MonoBehaviour
         return true;
     }
 
+    //send how many point the monster get this round
     public void SetTempPointMonster(int value)
     {
         tempPointMonster = value;
     }
 
+    //Set all the players attibutes IsReady to false
     public void SetPlayerReadyToFalse()
     {
         var players = gameManager.GetPlayers();
         foreach(Player p in players.Values)
         {
-            p.data.IsReady = false;
+            p.SetIsReady(false);
         }
     }
 
+    //Set all the players's attibutes IsReady to true
     public void SetPlayerReadyToTrue()
     {
         var players = gameManager.GetPlayers();
         foreach (Player p in players.Values)
         {
-            p.data.IsReady = true;
+            p.SetIsReady(true);
         }
     }
 
+    //Make the code for round 4
     public void Phase4(Dictionary<string, Player> players)
     {
         victoryManager.AddPointPlayer(1);
 
         foreach ((string key, Player player) in players)
         {
-            player.data.Location = null;
-            if (key == gameManager.localPlayer)
+            player.SetLocation(null);
+            if (key == gameManager.GetLocalPlayer())
             {
                 player.ResetButton();
             }
@@ -131,10 +130,11 @@ public class RoundManager : MonoBehaviour
         SetPlayerReadyToTrue();
     }
 
+    //Make the code for round 3
     public async Task Phase3Async()
     {
         
-        if (gameManager.isServer)
+        if (gameManager.GetIsServer())
         {
             await Phase3ServeurAsync();
         }
@@ -152,17 +152,19 @@ public class RoundManager : MonoBehaviour
         SetPlayerReadyToTrue();
     }
 
+    //Make the code for round 3 for all the clients (except host)
     private void Phase3Client()
     {
         var players = gameManager.GetPlayers();
-        Player local = players.GetValueOrDefault(gameManager.localPlayer);
+        Player local = players.GetValueOrDefault(gameManager.GetLocalPlayer());
 
         if (!local.isServer)
         {
-            local.SendLocationCmd(local.data.Location.Value);
+            local.SendLocationCmd(local.GetLocation().Value);
         }
     }
 
+    //Make the code for round 3 for the host
     private async Task Phase3ServeurAsync()
     {
         while (!CheckLocation())
@@ -170,17 +172,17 @@ public class RoundManager : MonoBehaviour
             await Task.Delay(25);
         }
         var players = gameManager.GetPlayers();
-        Player local = players.GetValueOrDefault(gameManager.localPlayer);
+        Player local = players.GetValueOrDefault(gameManager.GetLocalPlayer());
         
-        LocationEnum monsterLocation = players.GetValueOrDefault(idMonster).data.Location.Value;
+        LocationEnum monsterLocation = players.GetValueOrDefault(idMonster).GetLocation().Value;
         int pointMonster = 0;
         foreach (Player player in players.Values)
         {
-            if (player.data.IsMonster)
+            if (player.GetIsMonster())
             {
                 continue;
             }
-            if (player.data.Location == monsterLocation)
+            if (player.GetLocation() == monsterLocation)
             {
                 pointMonster++;
             }
@@ -188,43 +190,44 @@ public class RoundManager : MonoBehaviour
         local.SendPointMonster(pointMonster);
     }
 
-
+    //Make the code for round 2
     [Client]
     public void Phase2()
     {
         var players = gameManager.GetPlayers();
         foreach ((string key, Player player) in players)
         {
-            if (player.data.IsMonster)
+            if (player.GetIsMonster())
             {
-                player.data.IsReady = false;
-                if (key == gameManager.localPlayer)
+                player.SetIsReady(false);
+                if (key == gameManager.GetLocalPlayer())
                 {
                     player.ShowButton(true);
                 }
             }
             else
             {
-                player.data.IsReady = true;
+                player.SetIsReady(true);
             }
         }
     }
 
+    //Make the code for round 1
     [Client]
     public void Phase1()
     {
         var players = gameManager.GetPlayers();
         foreach ((string key, Player player) in players)
         {
-            if (player.data.IsMonster)
+            if (player.GetIsMonster())
             {
-                player.data.IsReady = true;
+                player.SetIsReady(true);
             }
             else
             {
-                player.data.IsReady = false;
+                player.SetIsReady(false);
 
-                if(key == gameManager.localPlayer)
+                if(key == gameManager.GetLocalPlayer())
                 {
                     player.ShowButton(false);
                 }

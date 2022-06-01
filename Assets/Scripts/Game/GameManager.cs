@@ -1,111 +1,85 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public partial class GameManager : MonoBehaviour
 {
     private const string playerPrefix = "Player";
-    public bool isGame = false;
-    public string localPlayer;
-    public bool isServer;
+
+    private bool isGame = false;
+    private string localPlayer;
+    private bool isServer;
+    private bool sceneIsLoading = false;
 
     private Dictionary<string, Player> players = new Dictionary<string, Player>();
     private Round etape;
 
-    [SerializeField]
-    private GameObject LobbyCanvas;
-    [SerializeField]
-    private GameObject GameCanvas;
-
-    RoundManager roundManager;
-    public bool sceneIsLoading = false;
-
-    [SerializeField]
-    private TextMeshProUGUI roundText;
-
-    void Start()
-    {
-        LobbyCanvas = gameObject.transform.Find("LobbyCanvas").gameObject;
-        GameCanvas = gameObject.transform.Find("GameCanvas").gameObject;
-        LobbyCanvas.SetActive(true);
-        roundManager = GetComponent<RoundManager>();
-        roundText = gameObject.transform.Find("GameCanvas/RoundBox/Text").GetComponent<TextMeshProUGUI>();
-    }
-
-    private async void Update()
-    {
-        if (!isGame || !CheckAllPlayerReady())
-        {
-            return;
-        }
-
-        etape = EnumStatic.Next(etape);
-        roundText.text = EnumStatic.GetEnumDescription(etape);
-        roundManager.SetPlayerReadyToFalse();
-        switch (etape)
-        {
-            case Round.Survior:
-                roundManager.Phase1();
-                break;
-            case Round.Monster:
-                roundManager.Phase2();
-                break;
-            case Round.Resolve:
-                await roundManager.Phase3Async();
-                break;
-            case Round.Reset:
-                roundManager.Phase4(players);
-                break;
-        }
-    }
-
-    public async void StartGame()
-    {
-        etape = await roundManager.InitGameAsync(players);
-    }
-
-    public void RegisterPlayer(string netId, Player player, bool isLocalPlayer, bool isServer)
-    {
-        string name = playerPrefix + netId;
-        player.SetPlayer(name);
-        player.SetId(netId);
-        players.Add(netId, player);
-        if (isLocalPlayer)
-        {
-            localPlayer = netId;
-        }
-        this.isServer = isServer;
-    }
-
+    //Get the list of all players
     public Dictionary<string, Player> GetPlayers() => players;
 
-
+    //Number of players in the game
     public int CountPlayer()
     {
         return players.Count;
     }
 
-    private bool CheckAllPlayerReady()
-    {
-        bool isAllPlayerReady = true;
-        foreach (Player player in players.Values)
-        {
-            if (!player.data.IsReady)
-            {
-                isAllPlayerReady = false;
-            }
-        }
-        return isAllPlayerReady;
-    }
-
+    //Change the attribute IsReady, with the param change, from the player with the param id equals to is netId
     public void SetPlayerReady(string id, bool change)
     {
-        players[id].data.IsReady = change;
+        players[id].SetIsReady(change);
     }
 
+    //Change the location, with the param change, of the player with the param id equals to is netId
     public void SetPlayerLocation(string id, LocationEnum change)
     {
-        players[id].data.Location = change;
+        players[id].SetLocation(change);
+    }
+
+    //Change the game status(true => launch the game, false => stop the game)
+    public void SetIsGame(bool change)
+    {
+        isGame = change;
+    }
+
+    //Get the current status of the game
+    public bool GetIsGame()
+    {
+        return isGame;
+    }
+
+    //Change the local player (to find quickly the local player in the list of players)
+    public void SetLocalPlayer(string change)
+    {
+        localPlayer = change;
+    }
+
+    //Get the id of the local player
+    public string GetLocalPlayer()
+    {
+        return localPlayer;
+    }
+
+    //Change the server (to find quickly if the client is the host)
+    public void SetIsServer(bool change)
+    {
+        isServer = change;
+    }
+
+    //Get if the player is the host or not
+    public bool GetIsServer()
+    {
+        return isServer;
+    }
+
+    //Set if the scene is changing or not
+    public void SetSceneIsLoading(bool change)
+    {
+        sceneIsLoading = change;
+    }
+
+    //Get if the scene is changing or not
+    public bool GetSceneIsLoading()
+    {
+        return sceneIsLoading;
     }
 }

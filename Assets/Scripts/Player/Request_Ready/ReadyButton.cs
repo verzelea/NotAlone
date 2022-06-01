@@ -4,15 +4,10 @@ using UnityEngine.UI;
 
 public class ReadyButton : NetworkBehaviour
 {
-    [SerializeField]
     private Button readyButton;
-    [SerializeField]
     private Player player;
-    [SerializeField]
     private Image validation;
-    [SerializeField]
     private GameManager gameManager;
-    [SerializeField]
     private GameObject readyButtonCanvas;
 
     private void Start()
@@ -25,6 +20,7 @@ public class ReadyButton : NetworkBehaviour
         FunctionReadyButton();
     }
 
+    //If a location of a player is empty, the ready button is grey and non-interactive
     private void Update()
     {
         if (player.GetLocation().HasValue)
@@ -37,14 +33,16 @@ public class ReadyButton : NetworkBehaviour
         }
     }
 
-    public void ShowButton(bool isMonsterOrNot)
+    //Show the button for survivors if param is false, else, show the button for the monster
+    public void ShowButton(bool isMonster)
     {
-        if (player.data.IsMonster == isMonsterOrNot)
+        if (player.GetIsMonster() == isMonster)
         {
             readyButtonCanvas.SetActive(true);
         }
     }
 
+    //Reset all the ready button
     public void ResetButton()
     {
         readyButton.gameObject.SetActive(true);
@@ -52,25 +50,28 @@ public class ReadyButton : NetworkBehaviour
         readyButtonCanvas.SetActive(false);
     }
 
+    //Set the function for the ready button
     private void FunctionReadyButton()
     {
         readyButton.onClick.AddListener(ReadyCliked);
     }
 
+    //Function for the ready button
     private void ReadyCliked()
     {
-        player.data.IsReady = true;
+        player.SetIsReady(true);
         PlayerReadyClient(player.GetId(), true);
         readyButton.gameObject.SetActive(false);
         validation.gameObject.SetActive(true);
     }
 
+    //Tell to the player, with the param id, that his attribute IsReady is equal to param ready
     [Client]
     private void PlayerReadyClient(string id, bool ready)
     {
         if (isServer)
         {
-            //envoi directement le message si c'est l'host qui envoi le message
+            //Send directly the message if it's the host who send it
             PlayerReadyRpc(id, ready);
         }
         else
@@ -79,14 +80,14 @@ public class ReadyButton : NetworkBehaviour
         }
     }
 
-    //Le serveur demande à envoyer le message à tout le monde
+    //The server send the request for all the clients
     [Command]
     public void PlayerReadyCommand(string id, bool ready)
     {
         PlayerReadyRpc(id, ready);
     }
 
-    //Le serveur envoi le message à tout le monde
+    //Each clients set the attribute IsReady of his player
     [ClientRpc]
     public void PlayerReadyRpc(string id, bool ready)
     {

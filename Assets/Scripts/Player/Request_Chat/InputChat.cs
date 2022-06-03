@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputChat : NetworkBehaviour
 {
-    private UpdateChat update = null;
+    private UpdateChat update;
 
     [SerializeField]
     private TMP_InputField inputField = null;
@@ -29,7 +29,7 @@ public class InputChat : NetworkBehaviour
     public void Send()
     {
         Player player = GetComponent<Player>();
-        string message = "\n" + player.GetPlayer() + " : " + inputField.text;
+        string message = player.GetPlayer() + " : " + inputField.text;
         if(isServer)
         {
             //Send directly the message if it's the host who send it
@@ -42,16 +42,31 @@ public class InputChat : NetworkBehaviour
         inputField.text = string.Empty;
     }
 
+    //Send a message for all players
+    [Client]
+    public void Send(string message)
+    {
+        if (isServer)
+        {
+            //Send directly the message if it's the host who send it
+            UpdateTextFile(message);
+        }
+        else
+        {
+            SendChat(message);
+        }
+    }
+
     //Serveur send the request to all clients
     [Command]
-    public void SendChat(string message)
+    private void SendChat(string message)
     {
         UpdateTextFile(message);
     }
 
     //All clients add the new message
     [ClientRpc]
-    public void UpdateTextFile(string response)
+    private void UpdateTextFile(string response)
     {
         update.Add(response);
     }

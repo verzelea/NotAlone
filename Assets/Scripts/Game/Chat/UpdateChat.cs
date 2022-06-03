@@ -27,10 +27,10 @@ public class UpdateChat : MonoBehaviour
     //Update the chat text field
     public void UpdateText()
     {
-        chatText.text = string.Empty;
+        chatText.text = "\n";
         foreach (string res in chat)
         {
-            chatText.text += res;
+            chatText.text += res + "\n";
         }
     }
 

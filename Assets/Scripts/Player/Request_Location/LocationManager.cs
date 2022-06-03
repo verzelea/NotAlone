@@ -43,6 +43,10 @@ public class LocationManager : NetworkBehaviour
         for (int i = 0; i < children; ++i)
         {
             var child = objectButton.GetChild(i).gameObject;
+
+            Image border = child.transform.Find("Image").GetComponent<Image>();
+            border.enabled = false;
+
             Button button = child.GetComponent<Button>();
             switch (child.name)
             {

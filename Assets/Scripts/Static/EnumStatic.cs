@@ -6,7 +6,7 @@ using System.Reflection;
 public static class EnumStatic
 {
     //Get the attribute Description form the enum value
-    public static string GetEnumDescription(Round value)
+    public static string GetEnumDescription<T>(T value) where T : struct, IConvertible
     {
         FieldInfo fi = value.GetType().GetField(value.ToString());
 

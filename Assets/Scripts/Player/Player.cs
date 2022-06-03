@@ -33,7 +33,6 @@ public partial class Player : NetworkBehaviour
 
     public LocationEnum? GetLocation()
     {
-        Debug.Log(data);
         return data.Location;
     }
 

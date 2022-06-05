@@ -1,8 +1,13 @@
 # NotAlone
 NotAlone (temporary name) is a Unity project about an asymmetrical video game. The game uses the rules of the board game NotALone, by Asmodee.
 
-## Launch game on your desktop (from fedora workstation 36 brute)
-Step by step to launch the game.
+## Launch game on your desktop
+Step by step to launch the game.  
+
+You can download the build of the game on the website itch.io :  
+https://grennrich.itch.io/not-alone/download/qCOtvXyGFSB3e5Wd_1ACd5LmSWjdhpCdgkAOT4Eb
+
+You can also start the game with the projct github :  
 1. In the Github Main Page of the project, download the project in a zip file (**Code**>**Download ZIP**),  
 or  
 Use command `git clone https://github.com/verzelea/NotAlone.git`in a command terminal.
@@ -12,6 +17,7 @@ Use command `git clone https://github.com/verzelea/NotAlone.git`in a command ter
 If you want to join the host, you will need is Ip Address. Write it in the text field next to the button **Client**, and then, click ont the button **Client** to join the lobby.
 
 ## Quick presentation of the game with a Youtube video
+https://www.youtube.com/watch?v=FKwSHW3nKHo
 
 ## Install the project on your desktop
 Step by step to install and launch the project on Unity.

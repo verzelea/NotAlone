@@ -41,6 +41,12 @@ The command will create the folder **NotAlone** , with all the project inside, i
 7. In Unity Hub, select **Open**, then search and select the folder **NotAlone**.
 
 ## Launch test on Unity
+Step by step to launch the tests in Unity.  
+1. Launch the project in Unity.
+2. If you didn't have it, open Test Runner window (**Window**>**General**>**Scene**).
+3. Normally, Unity will find the Test folder. If not, in **EditMode** menu, add the folder **Assets/Tests/EditMode**, and in **PlayMode**, add the folder **Assets/Tests/PlayMode**.
+4. Select if you want to run the test for **PlayMode** or **EditMode**
+5. Select **Run All** for launch all the tests from this section
 
 ## Trello
 You can see my Kaban board on Trello with this link: https://trello.com/b/Xt04Y4oc/notalone

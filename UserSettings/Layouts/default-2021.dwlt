@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Test Runner
   m_RootView: {fileID: 8}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -40,9 +40,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 518.4
+    y: 358.4
     width: 419.19995
-    height: 204.39996
+    height: 364.4
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 18
+  controlID: 126
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 17
+  controlID: 66
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -118,9 +118,9 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 419.19995
-    height: 518.4
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+    height: 358.4
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -144,7 +144,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 321.6
-    height: 368.8
+    height: 314.4
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 17}
@@ -168,11 +168,11 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 368.8
+    y: 314.4
     width: 1116.8
-    height: 354
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+    height: 408.4
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 15}
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 124
+  controlID: 67
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -295,11 +295,11 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1116.8
-    height: 368.8
+    height: 314.4
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 125
+  controlID: 42
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -318,7 +318,7 @@ MonoBehaviour:
     x: 321.6
     y: 0
     width: 795.2001
-    height: 368.8
+    height: 314.4
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
@@ -348,20 +348,20 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 1116.8
-    y: 592
+    y: 432
     width: 418.19995
-    height: 183.39996
+    height: 343.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 149
+    ID: 449
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
-    - 80.8
-    - 32
+    - 204.79999
+    - 68
     relativeSizes:
     - 0.75
     - 0.25
@@ -371,7 +371,7 @@ MonoBehaviour:
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 112.8
+    lastTotalSize: 272.8
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -387,8 +387,8 @@ MonoBehaviour:
       uniqueId: '[NotAlone][suite]'
       name: NotAlone
       fullName: NotAlone
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.3022201
       messages: 
       output: 
       stacktrace: 
@@ -399,12 +399,12 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1004
+    - id: 1003
       uniqueId: '[PlayMode][C:/Users/verzear/Documents/GitHub/NotAlone/Library/ScriptAssemblies/PlayMode.dll][suite]'
       name: PlayMode.dll
       fullName: C:/Users/verzear/Documents/GitHub/NotAlone/Library/ScriptAssemblies/PlayMode.dll
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0757575
       messages: 
       output: 
       stacktrace: 
@@ -416,11 +416,11 @@ MonoBehaviour:
       parentId: 1000
       parentUniqueId: '[NotAlone][suite]'
     - id: 1001
-      uniqueId: PlayMode.dll/[PlayMode][NewTestScript][suite]
-      name: NewTestScript
-      fullName: NewTestScript
-      resultStatus: 0
-      duration: 0
+      uniqueId: PlayMode.dll/[PlayMode][PlayerTest][suite]
+      name: PlayerTest
+      fullName: PlayerTest
+      resultStatus: 1
+      duration: 0.0545167
       messages: 
       output: 
       stacktrace: 
@@ -429,14 +429,14 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1004
+      parentId: 1003
       parentUniqueId: '[PlayMode][C:/Users/verzear/Documents/GitHub/NotAlone/Library/ScriptAssemblies/PlayMode.dll][suite]'
     - id: 1002
-      uniqueId: PlayMode.dll/NewTestScript/[PlayMode][NewTestScript.NewTestScriptSimplePasses]
-      name: NewTestScriptSimplePasses
-      fullName: NewTestScript.NewTestScriptSimplePasses
-      resultStatus: 0
-      duration: 0
+      uniqueId: PlayMode.dll/PlayerTest/[PlayMode][PlayerTest.Test]
+      name: Test
+      fullName: PlayerTest.Test
+      resultStatus: 1
+      duration: 0.0279519
       messages: 
       output: 
       stacktrace: 
@@ -447,31 +447,34 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1001
-      parentUniqueId: PlayMode.dll/[PlayMode][NewTestScript][suite]
-    - id: 1003
-      uniqueId: PlayMode.dll/NewTestScript/[PlayMode][NewTestScript.NewTestScriptWithEnumeratorPasses]
-      name: NewTestScriptWithEnumeratorPasses
-      fullName: NewTestScript.NewTestScriptWithEnumeratorPasses
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: PlayMode.dll/[PlayMode][NewTestScript][suite]
-    m_ResultText: 
-    m_ResultStacktrace: 
+      parentUniqueId: PlayMode.dll/[PlayMode][PlayerTest][suite]
+    m_ResultText: 'TestGetSet (1,029s)
+
+      ---
+
+      Unhandled log message: ''[Exception]
+      NullReferenceException: Object reference not set to an instance of an object''.
+      Use UnityEngine.TestTools.LogAssert.Expect
+
+      ---
+
+      UpdateChat.Start
+      () (at Assets/Scripts/Game/Chat/UpdateChat.cs:13)
+
+      ---
+
+      NullReferenceException:
+      Object reference not set to an instance of an object'
+    m_ResultStacktrace: 'UpdateChat.Start () (at Assets/Scripts/Game/Chat/UpdateChat.cs:13)
+
+      
+
+'
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 7815b9deffffff7f
+      m_SelectedIDs: 9cb0ef6f
+      m_LastClickedID: 1877979292
+      m_ExpandedIDs: 7815b9deb09ca85e25bb8065ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -505,8 +508,8 @@ MonoBehaviour:
       uniqueId: '[NotAlone][suite]'
       name: NotAlone
       fullName: NotAlone
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0958577
       messages: 
       output: 
       stacktrace: 
@@ -517,13 +520,96 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
+    - id: 1010
+      uniqueId: '[EditMode][C:/Users/verzear/Documents/GitHub/NotAlone/Library/ScriptAssemblies/EditMode.dll][suite]'
+      name: EditMode.dll
+      fullName: C:/Users/verzear/Documents/GitHub/NotAlone/Library/ScriptAssemblies/EditMode.dll
+      resultStatus: 1
+      duration: 0.050371
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1006
+      parentUniqueId: '[NotAlone][suite]'
+    - id: 1001
+      uniqueId: EditMode.dll/[EditMode][StaticTest][suite]
+      name: StaticTest
+      fullName: StaticTest
+      resultStatus: 1
+      duration: 0.048041
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1003
+      parentUniqueId: '[EditMode][C:/Users/verzear/Documents/GitHub/NotAlone/Library/ScriptAssemblies/EditMode.dll][suite]'
+    - id: 1004
+      uniqueId: EditMode.dll/StaticTest/[EditMode][StaticTest.TestGet_IPv6_Local_IP]
+      name: TestGet_IPv6_Local_IP
+      fullName: StaticTest.TestGet_IPv6_Local_IP
+      resultStatus: 1
+      duration: 0.0206088
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: EditMode.dll/[EditMode][StaticTest][suite]
+    - id: 1002
+      uniqueId: EditMode.dll/StaticTest/[EditMode][StaticTest.TestGetEnumDescription]
+      name: TestGetEnumDescription
+      fullName: StaticTest.TestGetEnumDescription
+      resultStatus: 1
+      duration: 0.0054102
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: EditMode.dll/[EditMode][StaticTest][suite]
+    - id: 1003
+      uniqueId: EditMode.dll/StaticTest/[EditMode][StaticTest.TestNext]
+      name: TestNext
+      fullName: StaticTest.TestNext
+      resultStatus: 1
+      duration: 0.0026136
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: EditMode.dll/[EditMode][StaticTest][suite]
     m_ResultText: 
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 7815b9deffffff7f
+      m_ExpandedIDs: c3d560da7815b9de2504ad28ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -570,9 +656,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 442.4
+    y: 388
     width: 1115.8
-    height: 333
+    height: 387.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -590,22 +676,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Menu
+    - Assets/Tests/PlayMode
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Scripts/Menu
+  - Assets/Tests/PlayMode
   m_LastFoldersGridSize: 96
   m_LastProjectPath: C:\Users\verzear\Documents\GitHub\NotAlone
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 240}
-    m_SelectedIDs: 4e580000
-    m_LastClickedID: 22606
-    m_ExpandedIDs: 0000000026580000285800002a5800002c58000000ca9a3b
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 68580000
+    m_LastClickedID: 22632
+    m_ExpandedIDs: 000000004258000044580000465800004858000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -633,7 +719,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000026580000285800002a5800002c580000
+    m_ExpandedIDs: 0000000042580000445800004658000048580000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -712,7 +798,7 @@ MonoBehaviour:
     x: 1116.8
     y: 73.6
     width: 418.19995
-    height: 497.40002
+    height: 337.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -753,7 +839,7 @@ MonoBehaviour:
     x: 0
     y: 73.6
     width: 320.6
-    height: 347.8
+    height: 293.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -763,7 +849,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 3eecffff7aecffff96ecffff9eecffff52edffff8cedffff3aefffff42efffffbaf9ffff28fbffffee550000045600002a560000
+      m_ExpandedIDs: 5cecffff96ecffffd6edfffff6efffffd8f0ffff12f1ffff44f2ffffeaf3ffff24f4ffff6cf5ffff36f6ffff72f6ffffacf7ffff0af8ffff1efbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1137,7 +1223,7 @@ MonoBehaviour:
     x: 321.6
     y: 73.6
     width: 793.2001
-    height: 347.8
+    height: 293.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1173,7 +1259,7 @@ MonoBehaviour:
     m_VAllowExceedBaseRangeMax: 1
     m_ScaleWithWindow: 0
     m_HSlider: 0
-    m_VSlider: 0
+    m_VSlider: 1
     m_IgnoreScrollWheelUntilClicked: 0
     m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
@@ -1185,22 +1271,22 @@ MonoBehaviour:
       x: 0
       y: 21
       width: 793.2001
-      height: 326.8
-    m_Scale: {x: 0.37824073, y: 0.37824073}
-    m_Translation: {x: 396.60004, y: 163.4}
+      height: 272.4
+    m_Scale: {x: 0.31527779, y: 0.31527779}
+    m_Translation: {x: 396.6, y: 136.19998}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -1048.5387
-      y: -432
-      width: 2097.0774
-      height: 864
+      x: -1257.9384
+      y: -431.99994
+      width: 2515.8767
+      height: 863.99994
     m_MinimalGUI: 1
-  m_defaultScale: 0.37824073
-  m_LastWindowPixelSize: {x: 991.5001, y: 434.75}
+  m_defaultScale: 0.31527779
+  m_LastWindowPixelSize: {x: 991.5001, y: 366.75}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1227,9 +1313,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 442.4
+    y: 388
     width: 1115.8
-    height: 333
+    height: 387.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default

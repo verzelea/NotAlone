@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class IpStatic
 {
-    public static string get_IPv6_Local_IP()
+    public static string Get_IPv6_Local_IP()
     {
         try
         {
@@ -13,8 +13,7 @@ public static class IpStatic
             IPAddress[] addr = ipEntry.AddressList;
             if (addr[0].AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
             {
-                Console.WriteLine("Local Ipv6 IP Address: " + addr[0].ToString()); //ipv6
-                return addr[0].ToString();
+                return addr[0].ToString();//ipv6
             }
         }
         catch (Exception) 

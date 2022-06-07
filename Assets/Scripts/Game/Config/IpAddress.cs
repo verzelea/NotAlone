@@ -25,7 +25,7 @@ public class IpAddress : MonoBehaviour
         buttonCopyIp = ipGroup.transform.Find("Button").GetComponent<Button>();
 
         ipGroup.SetActive(true);
-        string ip = IpStatic.get_IPv6_Local_IP();
+        string ip = IpStatic.Get_IPv6_Local_IP();
         if(string.IsNullOrEmpty(ip))
         {
             textField.text = NotFound;

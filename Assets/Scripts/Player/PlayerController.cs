@@ -53,4 +53,3 @@ public partial class Player : NetworkBehaviour
         update.Add("Server: The monster wins " + pointMonster + " points");
     }
 }
-

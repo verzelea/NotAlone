@@ -1,5 +1,70 @@
-This logbook contains all the advancement about this project for each day spend on it.
+This logbook contains all the advancements about this project for each day spent on it.
 
 15/02/2022
 I create this logbook and the Kaban board on Trello.
+<<<<<<< HEAD
 I create the project and initialize it on github.
+=======
+
+21/02/2022
+I search for multiplayer on Unity. I think use Mirror, a free server for a multiplayer game on Unity.
+I think to create a chat to try the multiplayer function.
+
+22/02/2022
+I create the chat. It just works for the current user. I need to add the multiplayer function.
+
+28/02/2022
+I made an error. The chat scripts aren't good. I need to change it to be more flexible. Also, ther second user can't talk.
+
+01/03/2022
+I continue my research and the development. It's fiddicult to understand the framework Mirror.
+
+14/03/2022
+The last two week, i finish the chat, and i add it some functionnality. You can see the user who send the chat. We can scroll the text box, and i add a maximum number of messages.
+Today, I will do some research on the lobby and the creation of session.
+
+15/03/2022
+I create the lobby and a lobby manager to manage all method for the lobby. A player can join a session of a host player.
+
+28/03/2022
+Modification of the Design to make it more beautiful. Research on the rules and the game system.
+
+29/03/2022
+Day spent on the thesis.
+
+04/04/2022
+Work on add a objectif bar for survivors and monster, create a objectif goal, and add victory screen ,adaptative for which team win, when one of the bar is full.
+
+05/04/2022
+Research for manage the different turns
+
+11/04/2022
+I finish the victory goal's bar and the end screen.
+I change quicly the design of the game.
+
+12/04/2022
+Add attributes to player and all buttons location. Fix error with the background design. Add
+
+19/04/2022
+Add function in buttons location.
+
+20/04/2022
+Add desing for all buttons location.
+Fix error when adding function in button location
+
+25/04/2022
+Start manage the different phase/round.
+Change the GameManager to be more flexible.
+
+26/04/2022
+Fix error with the new GameManager. 
+
+02/05/2022
+Research about the round.
+
+09/05/2022
+Research about the round.
+
+31/05/2022
+During the month, I finish the game development. Today, I clean the code for the return.
+>>>>>>> develop

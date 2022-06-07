@@ -1,18 +1,19 @@
+using Mirror;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public partial class Player : NetworkBehaviour
 {
-    public string id = "";
-    public string player = "";
+    private string id;
+    private PlayerData data = new PlayerData();
 
     public void SetPlayer(string newname)
     {
-        player = newname;
+        data.Player = newname;
     }
 
     public string GetPlayer()
     {
-        return player;
+        return data.Player;
     }
 
     public void SetId(string newid)
@@ -23,5 +24,35 @@ public class Player : MonoBehaviour
     public string GetId()
     {
         return id;
+    }
+
+    public void SetLocation(LocationEnum? location)
+    {
+        data.Location = location;
+    }
+
+    public LocationEnum? GetLocation()
+    {
+        return data.Location;
+    }
+
+    public void SetIsMonster(bool change)
+    {
+        data.IsMonster = change;
+    }
+
+    public bool GetIsMonster()
+    {
+        return data.IsMonster;
+    }
+
+    public void SetIsReady(bool change)
+    {
+        data.IsReady = change;
+    }
+
+    public bool GetIsReady()
+    {
+        return data.IsReady;
     }
 }

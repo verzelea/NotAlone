@@ -2,9 +2,7 @@ This logbook contains all the advancements about this project for each day spent
 
 15/02/2022
 I create this logbook and the Kaban board on Trello.
-<<<<<<< HEAD
 I create the project and initialize it on github.
-=======
 
 21/02/2022
 I search for multiplayer on Unity. I think use Mirror, a free server for a multiplayer game on Unity.
@@ -67,4 +65,3 @@ Research about the round.
 
 31/05/2022
 During the month, I finish the game development. Today, I clean the code for the return.
->>>>>>> develop
